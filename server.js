@@ -42,12 +42,29 @@ Airtable.configure({
 });
 var base = Airtable.base('app2SkZOQcF0m2jZG');
 
-var Airtable = require('airtable');
-Airtable.configure({
-    endpointUrl: 'https://api.airtable.com',
-    apiKey: 'keyz6nhx5XT4NyMUp'
-});
-var base = Airtable.base('app2SkZOQcF0m2jZG');
+//create an array to hold events data
+let eventsArr;
+
+//use airtable to populate events array
+base('Events').select(
+	{
+			view: "Grid view"
+	}
+).eachPage(function page(records, fetchNextPage) 
+	{
+	// This function (`page`) will get called for each page of records.
+
+	records.forEach(function(record) 
+		{
+				eventsArr.push(record);
+		});
+	fetchNextPage();
+
+	}, function done(err) 
+		{
+			if (err) { console.error(err); return; }
+		}
+);
 
 app.post("/event", function(req,res){
    base('Events').create({
@@ -60,6 +77,22 @@ app.post("/event", function(req,res){
       console.log(record.getId())
    })
 })
+
+app.get("/events/:date", function(req,res)
+	{
+		var date = req.params.date;
+		datesEvents = [];
+		console.log(date);
+		for(let i=0;i<eventsArr.length;i++)
+		{
+			console.log(eventsArr[i].date)
+			if(date==eventsArr[i].date)
+			{
+				datesEvents.push(eventsArr[i]);
+			}
+		}
+		res.send(datesEvents);
+	}
 
 var port = 8080
 app.listen(port);
