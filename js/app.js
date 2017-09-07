@@ -7,6 +7,10 @@ $('#datepicker').datepicker({
     }
 });
 
+//************
+//FUNCTION FOR QUINN. USE TO CREATE EVENT. 
+//************
+
 var createEvent = function() {   
    data={
       name: document.getElementById('name').value
@@ -27,11 +31,4 @@ var createEvent = function() {
    document.getElementById('name').value = ""
 }
 
-document.getElementById("btn").addEventListener("click", createEvent);
-
-var navigateToDay = function() {
-   $.ajax({
-      url: "http://localhost:8080/14243",
-      method: "GET"
-   })
-}
+// document.getElementById("btn").addEventListener("click", createEvent);
