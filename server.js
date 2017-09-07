@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser')
+var Event = require('./backend-models/event.js')
 
 // viewed at http://localhost:8080
 app.get('/', function(req, res) {
