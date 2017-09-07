@@ -22,15 +22,14 @@
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
     height: 1.8em;
     position: absolute;
-    top: 2px;
+    top: -18px;
     width: 1.8em;
+    cursor: pointer;
 }
 
-.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
+.ui-datepicker .ui-datepicker-prev { left: -18px; }
 
-.ui-datepicker .ui-datepicker-prev { left: 2px; }
-
-.ui-datepicker .ui-datepicker-next { right: 2px; }
+.ui-datepicker .ui-datepicker-next { right: -2px; }
 
 .ui-datepicker .ui-datepicker-prev-hover { left: 1px; }
 
@@ -46,9 +45,10 @@
 }
 
 .ui-datepicker .ui-datepicker-title {
-    line-height: 1.8em;
+    line-height: 1.6em;
     margin: 0 2.3em;
     text-align: center;
+    font-size: 1.18em;
 }
 
 .ui-datepicker .ui-datepicker-title select {
@@ -83,7 +83,7 @@
 .ui-datepicker td span, .ui-datepicker td a {
     display: block;
     padding: .2em;
-    text-align: right;
+    text-align: center;
     text-decoration: none;
 }
 
