@@ -78,7 +78,10 @@ app.post("/event", function(req,res){
    })
 })
 
-app.get("/events/:date", function(req,res)
+//GET function for the date pages, finds all events in eventsArr on the same date as the date parameter
+//pre: eventsArr has all events on it
+//post: returns array of events on specific date
+app.get("/date/:date", function(req,res)
 	{
 		var date = req.params.date;
 		datesEvents = [];
