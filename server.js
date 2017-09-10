@@ -43,7 +43,7 @@ Airtable.configure({
 var base = Airtable.base('app2SkZOQcF0m2jZG');
 
 //create an array to hold events data
-let eventsArr;
+let eventsArr = [];
 
 //use airtable to populate events array
 base('Events').select(
@@ -92,7 +92,7 @@ app.get("/events/:date", function(req,res)
 			}
 		}
 		res.send(datesEvents);
-	}
+	})
 
 var port = 8080
 app.listen(port);
