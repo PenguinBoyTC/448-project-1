@@ -56,6 +56,7 @@ base('Events').select(
 
 	records.forEach(function(record) 
 		{
+			//TODO: make eventsArr use event model instead of record references
 				eventsArr.push(record);
 		});
 	fetchNextPage();
