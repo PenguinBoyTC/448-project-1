@@ -2,7 +2,7 @@ var pageDate = window.location.href
 var res = pageDate.split('/')
 pageDate = res[4]
 console.log(pageDate);
-getTimes("4,5,9,10,47");
+console.log(getTimes("4,5,6,7,8,9,10,22,23,24,47"));
 
 //array created to hold all the day's events
 var daysEvents = [];
@@ -39,7 +39,7 @@ function drawEvents()
 function getTimes(timeBlocks)
 {
 	let blocksArr = [];
-	let outputString;
+	let outputString = "";
 	
 	//temporary string to hold blocks, in case they're longer than 1 character
 	let temp = "";
@@ -60,35 +60,56 @@ function getTimes(timeBlocks)
 	}
 	//since there's no comma at the end of timeBlocks, push temp if it's not empty
 	if(temp)
-		blocksArr.push(temp);
+		blocksArr.push(parseInt(temp));
 	
 	//blocksArr is now full, so outputString can now be constructed
+	for(let i=0;i<blocksArr.length;i++)
+	{
+		//if it's the start block for a given set of consecutive blocks, write the start time
+		if(i===0||blocksArr[i]!=(parseInt(blocksArr[i-1])+1))
+		{
+			outputString = outputString + blocksConversion(parseInt(blocksArr[i]))+" - ";
+		}
+		//if it's the end block for a given set of consecutive blocks, write the end time
+		if(i===blocksArr.length||blocksArr[i]!=(parseInt(blocksArr[i+1])-1))
+		{
+			outputString = outputString + blocksConversion(parseInt(blocksArr[i])+1);
+			//if it's not the last block, put a comma to separate times
+			if(i!==blocksArr.length)
+				outputString = outputString + ", ";
+		}
+	}
+	
+	return outputString;
 }
 
 //converts given block string to 12-hour time string
-//pre: block is string of a number between 0 and 47
+//pre: block is a number between 0 and 48
 //post: returns converted string
 function blocksConversion(block)
 {
 	let temp = "";
+	//in the event that the event ends at midnight, read midnight as block 0, not block 48
+	if(block==48)
+		block = 0;
 	//if block/2 is zero, that means it's 12am or 12:30am, so add 12 to temp
-	if(block.parseInt()/2===0)
+	if(Math.floor(block/2)===0)
 		temp = temp + "12";
 	//else if block>26, that means block/2 is more than 12, so we subtract 12 from it and add it to temp
-	else if(block.parseInt()>=26)
-		temp = temp + (block.parseInt()/2-12);
+	else if(block>=26)
+		temp = temp + Math.floor((block/2-12));
 	//else we just add block/2 to temp
 	else
-		temp = temp + (block.parseInt()/2);
+		temp = temp + Math.floor((block/2));
 	
 	//then, if block is odd, that means it represents a :30 time, otherwise it represents a :00 time
-	if(block.parseInt()%2===1)
+	if(block%2===1)
 		temp = temp + ":30";
 	else
 		temp = temp + ":00";
 	
 	//adds am to blocks before and including 11:30am, adds pm to those after
-	if(blocks.parseInt()>23)
+	if(block>23)
 		temp = temp + "pm";
 	else
 		temp = temp + "am";
