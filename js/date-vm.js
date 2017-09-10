@@ -7,6 +7,28 @@ console.log(getTimes("4,5,6,7,8,9,10,22,23,24,47"));
 //array created to hold all the day's events
 var daysEvents = [];
 
+//Funciton from PhiLho & Anil Namde of Stack Overflow - https://stackoverflow.com/questions/276479/javascript-how-to-validate-dates-in-format-mm-dd-yyyy
+function validateDate(date)
+{
+    var matches = /^(\d{1,2})[_\/](\d{1,2})[_\/](\d{4})$/.exec(date);
+    if (matches == null) return false;
+    var d = matches[2];
+    var m = matches[1] - 1;
+    var y = matches[3];
+    var composedDate = new Date(y, m, d);
+    return composedDate.getDate() == d &&
+            composedDate.getMonth() == m &&
+            composedDate.getFullYear() == y;
+
+}
+
+var dateValidity = validateDate(pageDate)
+if(!dateValidity) {
+   //TODO: Change this to the proper URL once deployed
+   window.location.href = 'http://localhost:8080';
+}
+
+
 //uses server to get all the events on the date of the page
 $.ajax({
       url: "http://localhost:8080/date/"+pageDate,

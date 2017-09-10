@@ -66,7 +66,6 @@ base('Events').select(
 			if (err) { console.error(err); return; }
 		}
 );
-
 app.post("/event", function(req,res){
    base('Events').create({
       "Name": req.body.name
