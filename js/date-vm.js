@@ -63,7 +63,15 @@ function logEvents()
 	}
 }
 
-//function that converts blocks into times
+//function that formats the string of event participants
+//pre: peopleString is properly formatted from the database
+//post: returns an array of formatted participants' data
+function getPeopleArray(peopleString)
+{
+	
+}
+
+//function that formats blocks into times
 //pre: timeBlocks is formatted correctly: non-negative numbers separated by commas, ordered from least to greatest
 //post: returns string that says times
 function getTimes(timeBlocks)
@@ -105,7 +113,7 @@ function getTimes(timeBlocks)
 		{
 			outputString = outputString + blocksConversion(parseInt(blocksArr[i])+1);
 			//if it's not the last block, put a comma to separate times
-			if(i!==blocksArr.length)
+			if(i!==(blocksArr.length-1))
 				outputString = outputString + ", ";
 		}
 	}
