@@ -43,59 +43,40 @@ Airtable.configure({
 var base = Airtable.base('app2SkZOQcF0m2jZG');
 
 //create an array to hold events data
-let eventsArr = [];
+var eventsArr = [];
 
 //use airtable to populate events array
-base('Events').select(
-	{
+base('Events').select({
 			view: "Grid view"
 	}
-).eachPage(function page(records, fetchNextPage) 
-	{
+).eachPage(function page(records, fetchNextPage) {
 	// This function (`page`) will get called for each page of records.
-
-	records.forEach(function(record) 
-		{
+	records.forEach(function(record) {
 			//TODO: make eventsArr use event model instead of record references
-				eventsArr.push(record);
+				eventsArr.push(record.fields);
 		});
 	fetchNextPage();
+
 
 	}, function done(err) 
 		{
 			if (err) { console.error(err); return; }
 		}
 );
-app.post("/event", function(req,res){
-   base('Events').create({
-      "Name": req.body.name
-   }, function(err, record){
-      if(err) {
-         console.error(err); return;
-      }
-      res.send(record.getId())
-      console.log(record.getId())
-   })
-})
 
 //GET function for the date pages, finds all events in eventsArr on the same date as the date parameter
 //pre: eventsArr has all events on it
 //post: returns array of events on specific date
-app.get("/date/:date", function(req,res)
-	{
-		var date = req.params.date;
-		datesEvents = [];
-		console.log(date);
-		for(let i=0;i<eventsArr.length;i++)
-		{
-			console.log(eventsArr[i].date)
-			if(date==eventsArr[i].date)
-			{
-				datesEvents.push(eventsArr[i]);
-			}
+app.get("/date/:date/events", function(req,res){
+	var date = req.params.date;
+	var datesEvents = [];
+	for(let i=0;i<eventsArr.length;i++){
+		if(date==eventsArr[i].Date){
+			datesEvents.push(eventsArr[i]);
 		}
-		res.send(datesEvents);
-	})
+	}
+	res.send(datesEvents);
+})
 
 var port = 8080
 app.listen(port);
