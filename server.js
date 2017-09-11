@@ -72,7 +72,7 @@ app.get("/date/:date/events", function(req,res){
 	var datesEvents = [];
 	for(let i=0;i<eventsArr.length;i++){
 		if(date==eventsArr[i].Date){
-			datesEvents.push(eventsArr[i]);
+			datesEvents.push(new Event(eventsArr[i]));
 		}
 	}
 	res.send(datesEvents);
