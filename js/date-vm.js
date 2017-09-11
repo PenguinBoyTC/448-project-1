@@ -2,7 +2,6 @@ var pageDate = window.location.href
 var res = pageDate.split('/')
 pageDate = res[4]
 console.log(pageDate);
-console.log(getTimes("4,5,6,7,8,9,10,22,23,24,47"));
 
 //array created to hold all the day's events
 var daysEvents = [];
@@ -31,18 +30,21 @@ if(!dateValidity) {
 
 //uses server to get all the events on the date of the page
 var getEventsForDay = function(){
-   console.log('hi')
    $.ajax({
       url: "http://localhost:8080/date/"+pageDate+"/events",
       method: "GET",
       dataType: "json",
       success: function(serverEventsArr){
-         daysEvents = serverEventsArr;
+		  for(let i=0;i<serverEventsArr.length;i++)
+		  {
+			  daysEvents.push(serverEventsArr[i]);
+		  }
+		drawEvents();
+		logEvents();
       },
    })
 }
 getEventsForDay();
-drawEvents();
 
 //This method puts all the events in daysEvents onto the page   
 //pre: daysEvents is filled with all events on the page's date
@@ -53,11 +55,11 @@ function drawEvents()
 
 function logEvents()
 {
-	for(let events in daysEvents)
+	for(let i=0;i<daysEvents.length;i++)
 	{
 		//TODO: fancy DOM editting magic to make this look better
-		document.write(events.name + "\n");
-		document.write("\t"+getTimes(events.blocks)+"\n\n");
+		document.write(daysEvents[i].name + "\n");
+		document.write("\t"+getTimes(daysEvents[i].blocks)+"\n\n");
 	}
 }
 
