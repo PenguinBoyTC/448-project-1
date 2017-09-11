@@ -49,6 +49,10 @@ drawEvents();
 //post: returns undefined
 function drawEvents()
 {
+}
+
+function logEvents()
+{
 	for(let events in daysEvents)
 	{
 		//TODO: fancy DOM editting magic to make this look better
