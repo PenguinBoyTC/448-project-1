@@ -1,9 +1,9 @@
-function Event(data) {
-  this.name = data.Name;
-  this.color = data.Color;
-  this.date = data.Date;
-  this.blocks = data.Blocks;
-  this.people = data.People;
+function Event(name,color,date,blocks,people) {
+  this.name = name;
+  this.color = color;
+  this.date = date;
+  this.blocks = blocks;
+  this.people = people;
 }
 
 // class methods

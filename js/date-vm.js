@@ -137,3 +137,29 @@ function blocksConversion(block)
 		temp = temp + "am";
 	return temp;
 }
+
+var toggleEventForm = function(){
+   if(document.getElementById('eventForm').style.display == 'none'){
+      document.getElementById('eventForm').style.display = 'block'
+   }
+   else {
+      document.getElementById('eventForm').style.display = 'none'  
+   }
+}
+//add event handler to the create event btn. Wrapped in page load to make sure that the handler works
+window.addEventListener('load', function(){
+   var submit = document.getElementById('submit-btn')
+   if(submit.addEventListener){
+      submit.addEventListener('click', createEvent, false)
+   }
+   else {
+      submit.attachEvent('onclick', createEvent)
+      console.log('hi')
+   }
+})
+
+var createEvent = function(){
+   var event = new Event(document.getElementById("eventName").value, '#eeeeee', pageDate,'1,2', document.getElementById("userName").value)
+   console.log(event)
+   document.getElementById('eventForm').style.display = 'none'  
+}
