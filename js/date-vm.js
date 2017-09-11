@@ -68,7 +68,66 @@ function logEvents()
 //post: returns an array of formatted participants' data
 function getPeopleArray(peopleString)
 {
+	//peopleArr is an array of objects with properties name and availableTimeBlocks
+	let peopleArr = [];
 	
+	//UnparsedArr is an array of strings that say the participant's name and available time blocks, all separated by commas
+	let peopleUnparsedArr = [];
+	let temp = "";
+	
+	for(let i=0;i<peopleString.length;i++)
+	{
+		//if the current character is an underscore, look for another one next, else concatenate temp with current character
+		if(peopleString.charAt(i)=="_")
+		{
+			if(peopleString.charAt(i+1)=="_")
+			{
+				//push temp to peopleArr
+				peopleUnparsedArr.push(temp);
+				
+				//reset temp
+				temp = "";
+				
+				//iterate i extra since we already know that i+1 is an underscore and to avoid array out of bounds at end of string
+				i++;
+			}
+			else
+				temp = temp + peopleString.charAt(i);
+		}
+		else
+			temp = temp + peopleString.charAt(i);
+	}
+	
+	//now, peopleUnparsedArr is assembled, so each string is parsed and broken down further
+	for(let person in peopleString)
+	{
+		var parseTemp = "";
+		var personObj = {
+			name: "",
+			availableTimeBlocks: ""};
+		var nameFound = false;
+		
+		//parsing persom string
+		for(let i=0;i<person.length;i++)
+		{
+			//for the first comma it finds, it sets personObj's name property and resets parseTemp.
+			//everything after the name is found is concatenated into parseTemp
+			if(!nameFound&&person.charAt(i)==",")
+			{
+				personObj[name] = parseTemp;
+				parseTemp = "";
+				nameFound = true;
+			}
+			else
+				parseTemp = parseTemp + person.charAt(i);
+		}
+		//second part of string formatted by getTimes, then added into availableTimeBlocks property
+		personObj[availableTimeBlocks] = getTimes(parseTemp);
+		//personObj gets added to the array peopleArr
+		peopleArr.push(personObj);
+	}
+	
+	console.log(peopleArr);
 }
 
 //function that formats blocks into times
