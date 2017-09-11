@@ -60,6 +60,9 @@ function logEvents()
 		//TODO: fancy DOM editting magic to make this look better
 		document.write(daysEvents[i].name + "\n");
 		document.write("\t"+getTimes(daysEvents[i].blocks)+"\n\n");
+		let attendees = getPeopleArray(daysEvents[i].people);
+		for(let j=0;j<attendees.length;j++)
+			document.write(JSON.stringify(attendees[j]))
 	}
 }
 
@@ -99,13 +102,14 @@ function getPeopleArray(peopleString)
 	}
 	
 	//now, peopleUnparsedArr is assembled, so each string is parsed and broken down further
-	for(let person in peopleString)
+	for(let j=0;j<peopleUnparsedArr.length;j++)
 	{
-		var parseTemp = "";
-		var personObj = {
+		let parseTemp = "";
+		let personObj = {
 			name: "",
 			availableTimeBlocks: ""};
-		var nameFound = false;
+		let nameFound = false;
+		let person = peopleUnparsedArr[j];
 		
 		//parsing persom string
 		for(let i=0;i<person.length;i++)
@@ -114,7 +118,7 @@ function getPeopleArray(peopleString)
 			//everything after the name is found is concatenated into parseTemp
 			if(!nameFound&&person.charAt(i)==",")
 			{
-				personObj[name] = parseTemp;
+				personObj.name = parseTemp;
 				parseTemp = "";
 				nameFound = true;
 			}
@@ -122,12 +126,12 @@ function getPeopleArray(peopleString)
 				parseTemp = parseTemp + person.charAt(i);
 		}
 		//second part of string formatted by getTimes, then added into availableTimeBlocks property
-		personObj[availableTimeBlocks] = getTimes(parseTemp);
+		personObj.availableTimeBlocks = getTimes(parseTemp);
 		//personObj gets added to the array peopleArr
 		peopleArr.push(personObj);
 	}
 	
-	console.log(peopleArr);
+	return peopleArr;
 }
 
 //function that formats blocks into times
