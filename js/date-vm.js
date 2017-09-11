@@ -30,16 +30,18 @@ if(!dateValidity) {
 
 
 //uses server to get all the events on the date of the page
-$.ajax({
-      url: "http://localhost:8080/date/"+pageDate,
+var getEventsForDay = function(){
+   console.log('hi')
+   $.ajax({
+      url: "http://localhost:8080/date/"+pageDate+"/events",
       method: "GET",
       dataType: "json",
       success: function(serverEventsArr){
          daysEvents = serverEventsArr;
       },
-      
    })
-   
+}
+getEventsForDay();
 drawEvents();
 
 //This method puts all the events in daysEvents onto the page   
@@ -154,7 +156,6 @@ window.addEventListener('load', function(){
    }
    else {
       submit.attachEvent('onclick', createEvent)
-      console.log('hi')
    }
 })
 
