@@ -2,7 +2,7 @@ var pageDate = window.location.href
 var res = pageDate.split('/')
 pageDate = res[4]
 console.log(pageDate);
-
+var militaryTime = false;
 //array created to hold all the day's events
 var daysEvents = [];
 
@@ -190,30 +190,46 @@ function getTimes(timeBlocks)
 function blocksConversion(block)
 {
 	let temp = "";
+	
 	//in the event that the event ends at midnight, read midnight as block 0, not block 48
 	if(block==48)
 		block = 0;
-	//if block/2 is zero, that means it's 12am or 12:30am, so add 12 to temp
-	if(Math.floor(block/2)===0)
-		temp = temp + "12";
-	//else if block>26, that means block/2 is more than 12, so we subtract 12 from it and add it to temp
-	else if(block>=26)
-		temp = temp + Math.floor((block/2-12));
-	//else we just add block/2 to temp
-	else
-		temp = temp + Math.floor((block/2));
 	
-	//then, if block is odd, that means it represents a :30 time, otherwise it represents a :00 time
-	if(block%2===1)
-		temp = temp + ":30";
+	if(militaryTime)
+	{
+		if(block/2<10)
+			temp = temp + "0";
+		temp = temp + Math.floor(block/2);
+		//then, if block is odd, that means it represents a :30 time, otherwise it represents a :00 time
+		if(block%2===1)
+			temp = temp + ":30";
+		else
+			temp = temp + ":00";
+	}
 	else
-		temp = temp + ":00";
-	
-	//adds am to blocks before and including 11:30am, adds pm to those after
-	if(block>23)
-		temp = temp + "pm";
-	else
-		temp = temp + "am";
+	{
+		//if block/2 is zero, that means it's 12am or 12:30am, so add 12 to temp
+		if(Math.floor(block/2)===0)
+			temp = temp + "12";
+		//else if block>26, that means block/2 is more than 12, so we subtract 12 from it and add it to temp
+		else if(block>=26)
+			temp = temp + Math.floor((block/2-12));
+		//else we just add block/2 to temp
+		else
+			temp = temp + Math.floor((block/2));
+		
+		//then, if block is odd, that means it represents a :30 time, otherwise it represents a :00 time
+		if(block%2===1)
+			temp = temp + ":30";
+		else
+			temp = temp + ":00";
+		
+		//adds am to blocks before and including 11:30am, adds pm to those after
+		if(block>23)
+			temp = temp + "pm";
+		else
+			temp = temp + "am";
+	}
 	return temp;
 }
 
