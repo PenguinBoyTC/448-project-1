@@ -1,10 +1,26 @@
 var pageDate = window.location.href
 var res = pageDate.split('/')
 pageDate = res[4]
-console.log(pageDate);
 
 //array created to hold all the day's events
 var daysEvents = [];
+
+//Handle resize of window
+if(window.screen.height > events.style.height){
+      $('#events').addClass('events-top')
+   } else{
+      $('#events').removeClass('events-top')
+   }
+
+
+window.addEventListener('resize', function(){
+   var events = document.getElementById('events')
+   if(window.screen.height > events.style.height){
+      $('#events').addClass('events-top')
+   } else{
+      $('#events').removeClass('events-top')
+   }
+})
 
 //Funciton from PhiLho & Anil Namde of Stack Overflow - https://stackoverflow.com/questions/276479/javascript-how-to-validate-dates-in-format-mm-dd-yyyy
 function validateDate(date)
@@ -40,28 +56,66 @@ var getEventsForDay = function(){
 			  daysEvents.push(serverEventsArr[i]);
 		  }
 		drawEvents();
-		logEvents();
+		// logEvents();
       },
    })
 }
 getEventsForDay();
+
+var expandEvent = function(event){
+   if(event.style.height == '200px'){
+      event.style.height = '80px'
+   }
+   else{
+      event.style.height = '200px'
+   }
+   var events = document.getElementById('events')
+   if(window.screen.height > events.style.height){
+      $('#events').addClass('events-top')
+   } else{
+      $('#events').removeClass('events-top')
+   }
+}
 
 //This method puts all the events in daysEvents onto the page   
 //pre: daysEvents is filled with all events on the page's date
 //post: returns undefined
 function drawEvents()
 {
+   var eventsDiv = document.getElementById('events')
+   var events = []
+
+
+   for(var i=0;i<daysEvents.length;i++)
+   {
+      events[i] = document.createElement('div')
+      events[i].setAttribute('class','event')
+      events[i].setAttribute('id','event-'+i)
+      events[i].style.backgroundColor = daysEvents[i].color
+      events[i].onclick = function(){expandEvent(this)}
+      eventsDiv.appendChild(events[i])
+      //add name to elements
+      var eventName = document.createElement('div')
+      eventName.setAttribute('class','event-name')
+      eventName.textContent = daysEvents[i].name
+      events[i].appendChild(eventName)
+
+      var eventTime = document.createElement('div')
+      eventTime.setAttribute('class','event-time')
+      eventTime.textContent = getTimes(daysEvents[i].blocks)
+      events[i].appendChild(eventTime)
+   }
 }
 
-function logEvents()
-{
-	for(let i=0;i<daysEvents.length;i++)
-	{
-		//TODO: fancy DOM editting magic to make this look better
-		document.write(daysEvents[i].name + "\n");
-		document.write("\t"+getTimes(daysEvents[i].blocks)+"\n\n");
-	}
-}
+// function logEvents()
+// {
+// 	for(let i=0;i<daysEvents.length;i++)
+// 	{
+// 		//TODO: fancy DOM editting magic to make this look better
+// 		document.write(daysEvents[i].name + "\n");
+// 		document.write("\t"+getTimes(daysEvents[i].blocks)+"\n\n");
+// 	}
+// }
 
 //function that converts blocks into times
 //pre: timeBlocks is formatted correctly: non-negative numbers separated by commas, ordered from least to greatest
@@ -105,7 +159,7 @@ function getTimes(timeBlocks)
 		{
 			outputString = outputString + blocksConversion(parseInt(blocksArr[i])+1);
 			//if it's not the last block, put a comma to separate times
-			if(i!==blocksArr.length)
+			if(i!==blocksArr.length-1)
 				outputString = outputString + ", ";
 		}
 	}
