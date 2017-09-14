@@ -8,24 +8,29 @@ var bodyParser = require('body-parser')
 var Event = require('./backend-models/event.js')
 
 // viewed at http://localhost:8080
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.set('view engine', 'html');
 app.get('/', function(req, res) {
+   console.log(req)
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
 app.use('/css',express.static(__dirname + '/css'));
 app.use('/js',express.static(__dirname + '/js'));
 app.use('/assets',express.static(__dirname + '/assets'));
 
-// app.all("*", function(req, res, next) {
-//   res.writeHead(200, { "Content-Type": "text/plain" });
-//   next();
-// });
+app.route('/event/:id')
+   .post(function(req,res){
+      base('Events').update(req.params.id, {
+        "People": req.body.people
+      }, function(err, record) {
+          if (err) { console.error(err); return; }
+          res.send('success')
+         });
+   })
 
-app.get('/date/:date', function (req, res) {
+app.get('/date/:date', function (req, res,next) {
   // Access userId via: req.params.userId
   // Access bookId via: req.params.bookId
    res.sendFile(path.join(__dirname + "/date.html"));
@@ -43,40 +48,40 @@ Airtable.configure({
 var base = Airtable.base('app2SkZOQcF0m2jZG');
 
 //create an array to hold events data
-var eventsArr = [];
-
-//use airtable to populate events array
-base('Events').select({
-			view: "Grid view"
-	}
-).eachPage(function page(records, fetchNextPage) {
-	// This function (`page`) will get called for each page of records.
-	records.forEach(function(record) {
-			//TODO: make eventsArr use event model instead of record references
-				eventsArr.push(record.fields);
-		});
-	fetchNextPage();
-
-
-	}, function done(err) 
-		{
-			if (err) { console.error(err); return; }
-		}
-);
 
 //GET function for the date pages, finds all events in eventsArr on the same date as the date parameter
 //pre: eventsArr has all events on it
 //post: returns array of events on specific date
-app.get("/date/:date/events", function(req,res){
-	var date = req.params.date;
-	var datesEvents = [];
-	for(let i=0;i<eventsArr.length;i++){
-		if(date==eventsArr[i].Date){
-			datesEvents.push(new Event(eventsArr[i]));
-		}
-	}
-	res.send(datesEvents);
+app.get("/date/:date/events", function(req,res,next){
+   var eventsArr = [];
+   base('Events').select({
+         view: "Grid view"
+   }
+   ).eachPage(function page(records, fetchNextPage) {
+      // This function (`page`) will get called for each page of records.
+      records.forEach(function(record) {
+            //TODO: make eventsArr use event model instead of record references
+               record.fields.Id = record.id
+               eventsArr.push(record.fields);
+         });
+      fetchNextPage();
+
+      }, function done(err) {
+         if (err) { console.error(err); return; }
+         var date = req.params.date;
+         var datesEvents = [];
+         for(var i=0;i<eventsArr.length;i++){
+            if(date==eventsArr[i].Date){
+               datesEvents.push(new Event(eventsArr[i]));
+            }
+         }
+         res.send(datesEvents);
+         next()
+         })
 })
+
+//Update event
+
 
 var port = 8080
 app.listen(port);

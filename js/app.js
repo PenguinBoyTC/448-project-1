@@ -22,11 +22,10 @@ var createEvent = function() {
       contentType: 'application/json',
       dataType: "json",
       success: function(data){
-         console.log("success ",data)
-         
+         console.log("success ",data) 
       },
-      
    })
+   
    navigateToDay()
    document.getElementById('name').value = ""
 }
