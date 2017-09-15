@@ -30,12 +30,17 @@ app.route('/event/:id')
          });
    })
 
+app.get('/admin', function (req, res,next) {
+   res.sendFile(path.join(__dirname + "/admin.html"));
+   app.use(function(req, res, next) {
+      next();
+   });
+})
+
 app.get('/date/:date', function (req, res,next) {
-  // Access userId via: req.params.userId
-  // Access bookId via: req.params.bookId
+
    res.sendFile(path.join(__dirname + "/date.html"));
    app.use(function(req, res, next) {
-      res.locals.date = req.params.date;
       next();
    });
 })
