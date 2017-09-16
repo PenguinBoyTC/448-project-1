@@ -3,7 +3,7 @@ $('#datepicker').datepicker({
     onSelect: function(date, inst) { 
       date = date.replace('/','_')
       date = date.replace('/','_')
-      window.location = 'https://open-invite-ku.herokuapp.com/' + date;
+      window.location = 'https://open-invite-ku.herokuapp.com/date' + date;
     }
 });
 
@@ -12,7 +12,7 @@ $('#datepicker').datepicker({
 //************
 
 var navigateToAdminMode = function() {
-   window.location = 'http://localhost:8080/admin'
+   window.location = 'https://open-invite-ku.herokuapp.com/admin'
 }
 
 var createEvent = function() {   
@@ -20,7 +20,7 @@ var createEvent = function() {
       name: document.getElementById('name').value
    }
    $.ajax({
-      url: "http://localhost:8080/event",
+      url: "https://open-invite-ku.herokuapp.com/event",
       data: JSON.stringify(data),
       method: "POST",
       contentType: 'application/json',

@@ -41,14 +41,14 @@ function validateDate(date)
 var dateValidity = validateDate(pageDate)
 if(!dateValidity) {
    //TODO: Change this to the proper URL once deployed
-   window.location.href = 'http://localhost:8080';
+   window.location.href = 'https://open-invite-ku.herokuapp.com';
 }
 
 
 //uses server to get all the events on the date of the page
 var getEventsForDay = function(){
    $.ajax({
-      url: "http://localhost:8080/date/"+pageDate+"/events",
+      url: "https://open-invite-ku.herokuapp.com/date/"+pageDate+"/events",
       method: "GET",
       dataType: "json",
       success: function(serverEventsArr){
@@ -202,7 +202,7 @@ var addUserToEvent = function(element) {
 }
 
 var updateEvent = function(data){
-   var url = 'http://localhost:8080/event/'+data.id
+   var url = 'https://open-invite-ku.herokuapp.com/event/'+data.id
    $.ajax({
       url: url,
       method: 'POST',

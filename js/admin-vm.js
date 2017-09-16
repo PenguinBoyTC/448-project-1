@@ -1,7 +1,7 @@
 var existingEvents = []
 
 $.ajax({
-   url: 'http://localhost:8080/admin/events',
+   url: 'https://open-invite-ku.herokuapp.com/admin/events',
    method: 'GET',
    contentType: 'application/json',
    dataType: "json",
@@ -126,7 +126,7 @@ var createEvent = function(){
    var valid =  checkEventFields(event)
    if(valid){
       $.ajax({
-         url: 'http://localhost:8080/create',
+         url: 'https://open-invite-ku.herokuapp.com/create',
          method: 'POST',
          data: JSON.stringify(event),
          contentType: 'application/json',
