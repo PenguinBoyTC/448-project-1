@@ -3,7 +3,7 @@ $('#datepicker').datepicker({
     onSelect: function(date, inst) { 
       date = date.replace('/','_')
       date = date.replace('/','_')
-      window.location = 'http://localhost:8080/date/' + date;
+      window.location = 'https://open-invite-ku.herokuapp.com/' + date;
     }
 });
 
