@@ -8,23 +8,10 @@
    <link rel="stylesheet" href="/css/styles.css"/>
   </head>
   <body>
-      <input type="button" data-name="show" value="Create an Event" id='toggle' onclick='toggleEventForm()'>
-      <div style="display:none" id='eventForm'>
-          Event Title:<br>
-          <input type="text" id="eventName" value="">
-          <br>
-          Your Name:<br>
-          <input type="text" id="userName" value="">
-          <br><br>
-          <div type="button" id="submit-btn">Create</div>
-
-      </div>
-
-      <div id='time-format-container'>
-         <span id='time-format__standard' class='time-format__option' onclick='convertToStandardTime()'>Standard</span>
-         <span id='time-format__military' class='time-format__option' onclick='convertToMilitaryTime()'>Military</span>
-      </div>
+       <span id='time-format__standard' class='time-format__option' onclick='convertToStandardTime()'>Standard</span>
+       <span id='time-format__military' class='time-format__option' onclick='convertToMilitaryTime()'>Military</span>
       <div id='events'></div>
   </body>
   <script type="text/javascript" src="http://localhost:8080/js/date-vm.js"></script>
+  <script type="text/javascript" src="http://localhost:8080/js/converter.js"></script>
 </html>

@@ -4,6 +4,9 @@
 
 body {
    background-color: #eff3ff;
+   text-align: center;
+   margin:0;
+   padding:0;
 }
 
 #admin-label {
@@ -11,7 +14,7 @@ body {
    font-size:20px;
    right:90px;
    top:36px;
-   color: #439663;
+   color: #264673;
 }
 
 #admin-mode-btn {
@@ -21,13 +24,13 @@ body {
    top:20px;
    right:20px;
    border-radius:40px;
-   background-color: #439663;
+   background-color: #264673;
    cursor:pointer;
    transition: background-color .3s;
 }
 
 #admin-mode-btn:hover {
-   background-color:#42825a;
+   background-color:#213c60;
 }
 
 #admin-img {
@@ -44,6 +47,13 @@ body {
    border: 1px solid black;
 }
 
+#datepicker-note {
+   position: absolute;
+   bottom:10px;
+   left:50%;
+   transform: translateX(-50%)
+}
+
 #time-format-container {
    position: absolute;
    top:6px;
@@ -57,10 +67,18 @@ body {
 }
 
 #time-format__standard {
-   margin-right:5px;
+   position: absolute;
+   left:16px;
+   top:10px;
+   font-size: 18px;
+
 }
 
 #time-format__military {
+   position: absolute;
+   left:16px;
+   top:36px;
+   font-size: 18px;
    color:#878787;
 }
 
@@ -79,7 +97,7 @@ body {
 
 .event {
    display: block;
-   width: 400px;
+   width: 398px;
    max-height: 80px;
    line-height:40px;
    margin-top:10px;
@@ -97,7 +115,7 @@ body {
    width:390px;
    line-height: 34px;
    padding-left:6px;
-   margin: 10px 0 0 0;
+   margin: 10px 0 3px 0;
    border:none;
    outline:none;
    border-radius:3px;
@@ -105,9 +123,9 @@ body {
 }
 
 .block-label {
-   display: block;
-   float: left;
+   float:left;
    clear:both;
+   text-align:left;
 }
 
 .user-submit-btn {
@@ -118,8 +136,105 @@ body {
    outline:none;
    background:white;
    float:right;
-   
    border-radius:3px;
    font-size:14px;
    cursor:pointer;
+   color:black;
+}
+
+#create-event-container {
+   display: block;
+   width:413px;
+   height:468px;
+   margin:10px auto;
+   padding:20px;
+   border-radius:6px;
+   background-color:#264673;
+   color:white;
+   text-align:center;
+}
+
+#datepicker-create {
+   line-height: 34px;
+   font-size:14px;
+   margin-top:3px;
+   outline:none;
+   border-radius:3px;
+   border:none;
+   padding: 0 6px;
+}
+
+.create-event__time-block-container {
+   display: inline-block;
+   width:100px;
+   margin:12px 0;
+}
+
+.block-label-create {
+   display: block;
+   text-align:center;
+   padding:2px 0;
+}
+
+#create-event-note {
+   font-size:14px;
+}
+
+#existing-events-container {
+   width:100%;
+   text-align: center;
+}
+
+#existing-events__label {
+   margin:20px 0;
+   font-size:20px;
+   color:black;
+}
+
+.existing-event {
+   width:413px;
+   padding:0 20px;
+   margin:10px auto;
+   max-height:80px;
+   border-radius:6px;
+   color:white;
+   cursor:pointer;
+   text-align: left;
+   overflow: hidden;
+   transition: max-height .75s;
+}
+
+.existing-event__name {
+   float:left;
+   line-height:24px;
+   margin: 10px 0;
+}
+
+.existing-event__date {
+   float:right;
+   line-height:24px;
+   font-weight: 300;
+   margin-top:10px;
+}
+
+.existing-event__times {
+   float:left;
+   margin-bottom:20px;
+   line-height: 24px;
+   clear:both;
+   font-weight: 300;
+}
+
+.existing-event__people-label {
+   float:left;
+   clear:both;
+   font-size:20px;
+   margin-bottom:3px;
+}
+
+.existing-event__person {
+   float:left;
+   clear:both;
+   font-weight: 300;
+   margin:8px 0;
 }

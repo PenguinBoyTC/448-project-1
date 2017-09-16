@@ -13,15 +13,6 @@ $('#datepicker').datepicker({
 
 var navigateToAdminMode = function() {
    window.location = 'http://localhost:8080/admin'
-   // $.ajax({
-   //    url: "http://localhost:8080/admin",
-   //    method: "Get",
-   //    contentType: 'application/json',
-   //    dataType: "json",
-   //    success: function(){
-   //       window.location = 'http://localhost:8080/admin'
-   //    },
-   // })
 }
 
 var createEvent = function() {   
