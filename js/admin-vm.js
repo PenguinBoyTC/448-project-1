@@ -240,7 +240,7 @@ var buildEventElements = function(){
       event.appendChild(eventDate)
 
       var eventTimes = document.createElement('div')
-      eventTimes.textContent = getTimes(existingEvents[i].date)
+      eventTimes.textContent = getTimes(existingEvents[i].blocks)
       eventTimes.setAttribute('class','existing-event__times')
       event.appendChild(eventTimes)
 
