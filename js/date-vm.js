@@ -1,3 +1,15 @@
+/**
+*	@File		date-vm.js
+*	This date-vm.js file verifies that the date that is inputted by the user will be a valid
+*	input for the event. Valid input implies that the day, month and the year are all valid
+*	expressions. Users will be able to distinguish between leap years and the extra within
+*	the month of February.
+*	
+*	@version	1.0
+*	@since		September 17, 2017
+*
+*/
+
 var pageDate = window.location.href
 var res = pageDate.split('/')
 pageDate = res[4]
@@ -22,6 +34,16 @@ window.addEventListener('resize', function(){
       $('#events').removeClass('events-top')
    }
 })
+/**
+*	@Function	validateDate
+*	This function takes a date as a parameter. This function which came from stackoverflow, 
+*	takes said date, and verifies that there is indeed valid information from the date.
+*	
+*	@pre	 	Date - takes a date as the input of the function
+*	@post		a composed date via just date, month, and the year of the event.
+*	@since	September 17, 2017
+*
+*/
 
 //Funciton from PhiLho & Anil Namde of Stack Overflow - https://stackoverflow.com/questions/276479/javascript-how-to-validate-dates-in-format-mm-dd-yyyy
 function validateDate(date)
@@ -44,8 +66,17 @@ if(!dateValidity) {
    window.location.href = 'http://localhost:8080';
 }
 
+/**
+*	@Function	getEventsForDays
+*	This function takes a date as a parameter. This function which came from stackoverflow, 
+*	takes said date, and verifies that there is indeed valid information from the date.
+*	
+*	@pre	 	Date - takes a date as the input of the function
+*	@post		a composed date via just date, month, and the year of the event.
+*	@since	September 17, 2017
+*
+*/
 
-//uses server to get all the events on the date of the page
 var getEventsForDay = function(){
    $.ajax({
       url: "http://localhost:8080/date/"+pageDate+"/events",
@@ -62,6 +93,17 @@ var getEventsForDay = function(){
 }
 getEventsForDay();
 
+/**
+*	@Function	expandEvent
+*	This function takes the event and displays all the information from the event to the
+*	html document. It will display all the active events from the active day.
+*	
+*	@pre 		event - is an active event from the 
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
+
 var expandEvent = function(event){
    if(event.style.maxHeight == event.scrollHeight+'px'){
       event.style.maxHeight = '80px'
@@ -76,10 +118,16 @@ var expandEvent = function(event){
       $('#events').removeClass('events-top')
    }
 }
+/**
+*	@Function	drawEvents
+*	This method puts all the events in daysEvents onto the page
+*	
+*	@pre 		daysEvents- is filled with all events on the page's date
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
 
-//This method puts all the events in daysEvents onto the page   
-//pre: daysEvents is filled with all events on the page's date
-//post: returns undefined
 function drawEvents(){
    var eventsDiv = document.getElementById('events')
    var events = []
@@ -149,6 +197,15 @@ function drawEvents(){
       }
    }
 }
+/**
+*	@Function	clearEventFieldst
+*	This function clears all the active events from the current day.
+*	
+*	@pre 		element - is an active day from the calendar. 
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
 
 var clearEventFields = function(element) {
    var children = element.childNodes
@@ -159,6 +216,17 @@ var clearEventFields = function(element) {
    }
    expandEvent(element)
 }
+/**
+*	@Function	addUserToEvent
+*	This function will add a user to the event. For a user to be created to an even
+*	they first need to leave their name and select the time blocks that they will be attending
+*	the event for.
+*	
+*	@pre 		element - is an active day from the calendar.  
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
 
 var addUserToEvent = function(element) {
    var event = {} 
@@ -200,6 +268,16 @@ var addUserToEvent = function(element) {
    
    updateEvent(event)
 }
+/**
+*	@Function	updateEvent
+*	This function sends information from the html document to the airTable database
+*	to be updated with the information
+*	
+*	@pre 		data - information to be updated at the database..  
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
 
 var updateEvent = function(data){
    var url = 'http://localhost:8080/event/'+data.id
@@ -215,7 +293,16 @@ var updateEvent = function(data){
    })
 }
 
-//Checks the inputed name
+/**
+*	@Function	checkUserName
+*	This function verifies that what the user provided was valid input.
+*	
+*	@pre 		name - the name of the person attending event..  
+*	@post		true if valid name, false if the name is invalid
+*	@since	September 17, 2017
+*
+*/
+
 var checkUsersName = function(name){
    if(name == ''){
       return false
@@ -229,6 +316,16 @@ var checkUsersName = function(name){
       return true
    }
 }
+/**
+*	@Function	convertToStandardTime
+*	This function takes all the existing military time and converts that time into
+*	standard time
+*	
+*	@pre 		none  
+*	@post		the time slots in standard time.
+*	@since	September 17, 2017
+*
+*/
 
 var convertToStandardTime = function(){
    militaryTime = false
@@ -237,6 +334,16 @@ var convertToStandardTime = function(){
    document.getElementById('time-format__military').style.color = '#878787'
    drawEvents()
 }
+/**
+*	@Function	convertToMilitaryTime
+*	This function takes all the existing standard time and converts that time into
+*	military time
+*	
+*	@pre 		none  
+*	@post		the time slots in military time.
+*	@since	September 17, 2017
+*
+*/
 
 var convertToMilitaryTime = function(){
    militaryTime = true
@@ -246,7 +353,16 @@ var convertToMilitaryTime = function(){
 
    drawEvents()
 }
-
+/**
+*	@Function	toggleEventForm
+*	This function changes the times of events from standard to military or from
+*	military to standard time.
+*	
+*	@pre 		none  
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
 var toggleEventForm = function(){
    if(document.getElementById('eventForm').style.display == 'none'){
       document.getElementById('eventForm').style.display = 'block'
