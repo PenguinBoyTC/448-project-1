@@ -85,7 +85,7 @@ function getPeopleArray(peopleString)
 *	@since	September 17, 2017
 *
 */
-
+function getTimes(timeBlocks)
 {
    let blocksArr = [];
    let outputString = "";
