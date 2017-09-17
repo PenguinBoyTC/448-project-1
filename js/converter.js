@@ -1,6 +1,13 @@
-//function that formats the string of event participants
-//pre: peopleString is properly formatted from the database
-//post: returns an array of formatted participants' data
+/**
+*	@Function	getPeopleArray
+*	This function formats the string of event participants. It takes all the user
+*	information for an event and converts it.
+*	
+*	@pre 		peopleString - Is properly formatted from the database.  
+*	@post		Returns an array of formatted participants’ data
+*	@since	September 17, 2017
+*
+*/
 
 function getPeopleArray(peopleString)
 {
@@ -67,10 +74,18 @@ function getPeopleArray(peopleString)
    return peopleArr;
 }
 
-//function that formats blocks into times
-//pre: timeBlocks is formatted correctly: non-negative numbers separated by commas, ordered from least to greatest
-//post: returns string that says times
-function getTimes(timeBlocks)
+/**
+*	@Function	getTimes
+*	This function takes each time block and formats that information into actual times
+*	to be used for the event. 
+*	
+*	@pre 		timeBlocks is formatted correctly: non-negative numbers separated by 
+*			commas,ordered from least to greatest
+*	@post		returns string that says times
+*	@since	September 17, 2017
+*
+*/
+
 {
    let blocksArr = [];
    let outputString = "";
@@ -117,10 +132,16 @@ function getTimes(timeBlocks)
    
    return outputString;
 }
+/**
+*	@Function	blockConversion
+*	This function takes given block string and converts that into the 12 hour time. 
+*	
+*	@pre		block is a number between 0 and 48
+*	@post		returns converted string
+*	@since	September 17, 2017
+*
+*/
 
-//converts given block string to 12-hour time string
-//pre: block is a number between 0 and 48
-//post: returns converted string
 var blocksConversion = function(block)
 {
    let temp = "";
