@@ -1,18 +1,21 @@
 var existingEvents = []
 
-$.ajax({
+var getEvents = function(){$.ajax({
    url: 'http://localhost:8080/admin/events',
    method: 'GET',
    contentType: 'application/json',
    dataType: "json",
    success: function(data){
+      existingEvents = []
       for(var i=0;i<data.length;i++){
          existingEvents.push(data[i])
       }
       buildEventElements()
-   },
-})
+      },
+   })
+}
 
+getEvents()
 var militaryTime = false;
 /**
 *	@Function	buildCreateElements
@@ -163,6 +166,8 @@ var createEvent = function(){
          dataType: "json",
          success: function(data){
             console.log("success")
+            $('#existing-events-container').empty()
+            getEvents()
          },
       })
    }
