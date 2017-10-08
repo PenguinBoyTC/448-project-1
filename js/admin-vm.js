@@ -245,6 +245,8 @@ var clearCreateEventElements = function() {
 */
 
 function buildEventElements(){
+
+// add a for loop to merge the same event
    for(var i=0;i<existingEvents.length;i++){
       if(i>0)
       {
@@ -286,13 +288,7 @@ function buildEventElements(){
         var eventPeopleLabel = document.createElement('div')
         eventPeopleLabel.setAttribute('class','existing-event__people-label')
         eventPeopleLabel.textContent = 'People Attending:'
-        event.appendChild(eventPeopleLabel)
-
-        // var eventDate = document.createElement('span')
-        // eventDate.textContent = existingEvents[i].date
-        // eventDate.setAttribute('class','existing-event__date')
-        // event.appendChild(eventDate)
-  
+        event.appendChild(eventPeopleLabel) 
         //add people
         eventsPeople = getPeopleArray(existingEvents[i].people)
         for(var j=0;j<eventsPeople.length;j++){
@@ -415,8 +411,18 @@ var convertToMilitaryTime = function(){
 
 
 
+//Project 2 new functions for Multi-day Scheduling by Chong
 
-//chong
+/**
+*	@Function	submitpopwindow
+*	This function build a pop up window to choose if add a new date to a event
+*	
+*	@pre 		none  
+*	@post		none
+*	@since	October 6, 2017
+*
+*/
+
 function submitpopwindow(){
   var mywindow = document.getElementById("myWindow");
   var inline = document.getElementsByClassName('close')[0];
@@ -430,6 +436,15 @@ function submitpopwindow(){
 
 }
 
+/**
+*	@Function	copyTime
+*	This function allow the creator to copy the previous timeslots to here
+*	
+*	@pre 		none  
+*	@post		none
+*	@since	October 7, 2017
+*
+*/
 
 function copyTime(){
   var exist_event = existingEvents[existingEvents.length-1];
@@ -465,7 +480,15 @@ function copyTime(){
 }
 
 
-
+/**
+*	@Function	addnewdate
+*	This function can add a new date to exist event to the data base
+*	
+*	@pre 		none  
+*	@post		none
+*	@since	October 7, 2017
+*
+*/
 function addnewdate(){
   console.log(existingEvents);
   console.log(existingEvents.length-1);
@@ -549,12 +572,40 @@ function addnewdate(){
   
 }
 
+/**
+*	@Function	navigateToaddnewdate
+*	This function can navigate To addnewdate.html
+*	
+*	@pre 		none  
+*	@post		none
+*	@since	October 7, 2017
+*
+*/
 function navigateToaddnewdate(){ 
   window.location = 'http://localhost:8080/addnewdate'
 }
+/**
+*	@Function	navigateToadmin
+*	This function can navigate To admin.html
+*	
+*	@pre 		none  
+*	@post		none
+*	@since	October 7, 2017
+*
+*/
 function navigateToadmin(){
   window.location = 'http://localhost:8080/admin'
 }
+
+/**
+*	@Function	valid2
+*	This function will check the new date information. One event cannot be the same date.
+*	
+*	@pre 		none  
+*	@post		none
+*	@since	October 7, 2017
+*
+*/
 
 function valid2(event){
   if(event.Blocks == ''|| event.Date == '') {
