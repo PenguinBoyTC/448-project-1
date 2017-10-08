@@ -335,7 +335,7 @@ function buildEventElements(){
 *
 */
 
-var expandEvent = function(event){
+function expandEvent(event){
    if(event.style.maxHeight == event.scrollHeight+'px'){
       event.style.maxHeight = '80px'
    }
