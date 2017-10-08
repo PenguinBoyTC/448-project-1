@@ -1,4 +1,3 @@
-// window.addEventListener("load", showeventname, false);
 var existingEvents = []
 
 var getEvents = function(){$.ajax({
@@ -176,6 +175,247 @@ var createEvent = function(){
    }   
 }
 
+
+/**
+*	@Function	checkEventFields
+*	This function checks to see if the information that has been by the user is actually valid
+*	information. It will check the information,name and date of the event.
+*	
+*	@pre		An active event 
+*	@post		returns false if invalid information, returns true with valid information
+*	@since	September 17, 2017
+*
+*/
+
+var checkEventFields = function(event) {
+   if(event.Blocks == '' || event.Name == '' || event.Date == '') {
+      alert("Please finish all information");
+      return false
+   }
+   else
+   {
+    for(var i=0;i<existingEvents.length;i++)
+    {
+      if(event.Name==existingEvents[i].name)
+      {
+        if(event.Date==existingEvents[i].date)
+        {
+          alert("There is a same event on the same date. Please change an another date.");
+          return false;
+        }
+      }
+    }
+    return true 
+   }
+}
+/**
+*	@Function	clearCreateEventElements
+*	This function clears all the active event boxes that have been checked
+*	
+*	@pre 		none. 
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
+
+var clearCreateEventElements = function() {
+   //clear checkboxs
+   var timeBlockContainers = []
+   var timeBlocks = []
+   for(var i=0;i<4;i++){
+      timeBlockContainers[i] = document.getElementById('create-event__time-block-container-'+i)
+      timeBlocks[i] = timeBlockContainers[i].childNodes
+      for(var j=1;j<13;j++){
+         timeBlocks[i][j-1].childNodes[1].checked = false
+      } 
+   }
+   //clear the rest
+   document.getElementById('create-event__name').value = ''
+   document.getElementById('datepicker-create').value = ''
+}
+/**
+*	@Function	buildEventElements
+*	This function takes all the times slots that are going to be used for the event, it takes those
+*	elements and creates time slot boxes based on how long the event is.
+*	
+*	@pre		none
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
+
+function buildEventElements(){
+   for(var i=0;i<existingEvents.length;i++){
+      if(i>0)
+      {
+        if(existingEvents[i].name!=existingEvents[i-1].name)
+        {
+          var event = document.createElement('div')
+          event.setAttribute('class','existing-event')
+          event.style.backgroundColor = existingEvents[i].color
+          event.onclick = function(){expandEvent(this)}
+          document.getElementById('existing-events-container').appendChild(event)
+
+          var eventName = document.createElement('h1')
+          eventName.textContent = existingEvents[i].name
+          eventName.setAttribute('class','existing-event__name')
+          event.appendChild(eventName)
+
+          var showmoretag = document.createElement('h2')
+          showmoretag.textContent = "Click to Expand"
+          showmoretag.setAttribute('class','existing-event__showmoretag')
+          event.appendChild(showmoretag)
+        }
+
+        var border = document.createElement('p')
+        border.textContent = "_____________________________________"
+        border.setAttribute('class','existing-event__border')
+        event.appendChild(border)
+
+
+        var eventDate = document.createElement('span')
+        eventDate.textContent = existingEvents[i].date
+        eventDate.setAttribute('class','existing-event__date')
+        event.appendChild(eventDate)
+
+        var eventTimes = document.createElement('div')
+        eventTimes.textContent = "Time: "+getTimes(existingEvents[i].blocks)
+        eventTimes.setAttribute('class','existing-event__times')
+        event.appendChild(eventTimes)
+  
+        var eventPeopleLabel = document.createElement('div')
+        eventPeopleLabel.setAttribute('class','existing-event__people-label')
+        eventPeopleLabel.textContent = 'People Attending:'
+        event.appendChild(eventPeopleLabel)
+
+        // var eventDate = document.createElement('span')
+        // eventDate.textContent = existingEvents[i].date
+        // eventDate.setAttribute('class','existing-event__date')
+        // event.appendChild(eventDate)
+  
+        //add people
+        eventsPeople = getPeopleArray(existingEvents[i].people)
+        for(var j=0;j<eventsPeople.length;j++){
+           var person = document.createElement('div')
+           person.setAttribute('class','existing-event__person')
+           person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
+           event.appendChild(person)
+        }
+      }
+      else
+      {
+        var event = document.createElement('div')
+        event.setAttribute('class','existing-event')
+        event.style.backgroundColor = existingEvents[i].color
+        event.onclick = function(){expandEvent(this)}
+        document.getElementById('existing-events-container').appendChild(event)
+  
+        var eventName = document.createElement('h1')
+        eventName.textContent = existingEvents[i].name
+        eventName.setAttribute('class','existing-event__name')
+        event.appendChild(eventName)
+
+        var showmoretag = document.createElement('h2')
+        showmoretag.textContent = "Click to Expand"
+        showmoretag.setAttribute('class','existing-event__showmoretag')
+        event.appendChild(showmoretag)
+
+        var border = document.createElement('p')
+        border.textContent = "_____________________________________"
+        border.setAttribute('class','existing-event__border')
+        event.appendChild(border)
+  
+        var eventDate = document.createElement('span')
+        eventDate.textContent = existingEvents[i].date
+        eventDate.setAttribute('class','existing-event__date')
+        event.appendChild(eventDate)
+  
+        var eventTimes = document.createElement('div')
+        eventTimes.textContent = "Time: "+getTimes(existingEvents[i].blocks)
+        eventTimes.setAttribute('class','existing-event__times')
+        event.appendChild(eventTimes)
+  
+        var eventPeopleLabel = document.createElement('div')
+        eventPeopleLabel.setAttribute('class','existing-event__people-label')
+        eventPeopleLabel.textContent = 'People Attending:'
+        event.appendChild(eventPeopleLabel)
+  
+        //add people
+        eventsPeople = getPeopleArray(existingEvents[i].people)
+        for(var j=0;j<eventsPeople.length;j++){
+           var person = document.createElement('div')
+           person.setAttribute('class','existing-event__person')
+           person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
+           event.appendChild(person)
+        }
+      }
+   }   
+}
+/**
+*	@Function	expandEvent
+*	This function takes the event and displays all the information from the event to the
+*	html document. It will display all the active events from the active day.
+*	
+*	@pre 		event - is an active event from the 
+*	@post		none
+*	@since	September 17, 2017
+*
+*/
+
+function expandEvent(event){
+   if(event.style.maxHeight == event.scrollHeight+'px'){
+      event.style.maxHeight = '80px'
+   }
+   else{
+      event.style.maxHeight = event.scrollHeight+'px'
+   }
+}
+/**
+*	@Function	convertToStandardTime
+*	This function takes all the existing military time and converts that time into
+*	standard time
+*	
+*	@pre 		none  
+*	@post		the time slots in standard time.
+*	@since	September 17, 2017
+*
+*/
+
+var convertToStandardTime = function(){
+   militaryTime = false
+   $('#events').empty()
+   document.getElementById('time-format__standard').style.color = 'black'
+   document.getElementById('time-format__military').style.color = '#878787'
+   $('.create-event__time-block-container').empty()
+   $('#existing-events-container').empty()
+   buildCreateElements()
+   buildEventElements()
+}
+/**
+*	@Function	convertToMilitaryTime
+*	This function takes all the existing standard time and converts that time into
+*	military time
+*	
+*	@pre 		none  
+*	@post		the time slots in military time.
+*	@since	September 17, 2017
+*
+*/
+
+var convertToMilitaryTime = function(){
+   militaryTime = true
+   $('#events').empty()
+   document.getElementById('time-format__standard').style.color = '#878787'
+   document.getElementById('time-format__military').style.color = 'black'
+   $('.create-event__time-block-container').empty()
+   $('#existing-events-container').empty()
+   buildCreateElements()
+   buildEventElements()
+}
+
+
+
+
 //chong
 function submitpopwindow(){
   var mywindow = document.getElementById("myWindow");
@@ -190,14 +430,10 @@ function submitpopwindow(){
 
 }
 
-// window.addEventListener("load", showeventname, false);
 
-// var showeventname = function(){
-//   var exist_event = existingEvents[existingEvents.length-1];
-//   document.getElementById('adddate__name').value = exist_event.name;
-// }
 function copyTime(){
   var exist_event = existingEvents[existingEvents.length-1];
+  document.getElementById('adddate_name').value = exist_event.name;
   var str_slots = exist_event.blocks;
   str_slots='['+str_slots+']';
   var timeslots = new Array();
@@ -225,7 +461,6 @@ function copyTime(){
   for(var i=0;i<timeslots.length;i++)
   {
     timeBlockCheckboxs[timeslots[i]].checked = true;
-    console.log(timeBlockCheckboxs[timeslots[i]]);
   }
 }
 
@@ -235,7 +470,6 @@ function addnewdate(){
   console.log(existingEvents);
   console.log(existingEvents.length-1);
   var exist_event = existingEvents[existingEvents.length-1];
-  document.getElementById('adddate__name').value = exist_event.name;
   event = {}
   date = document.getElementById('datepicker-create').value
   formattedDate =  date.replace('/','_')
@@ -296,11 +530,7 @@ function addnewdate(){
   else{
      event.Color = '#25685d'
   }
-  console.log(111111111);
-  var valid =  valid2(event,exist_event)
-  console.log(valid);
-  console.log(event.Date);
-  console.log(exist_event.date);
+  var valid =  valid2(event)
   if(valid){
      $.ajax({
         url: 'http://localhost:8080/create',
@@ -319,14 +549,14 @@ function addnewdate(){
   
 }
 
-function navigateToaddnewdate(){
+function navigateToaddnewdate(){ 
   window.location = 'http://localhost:8080/addnewdate'
 }
 function navigateToadmin(){
   window.location = 'http://localhost:8080/admin'
 }
 
-function valid2(event,exist_event){
+function valid2(event){
   if(event.Blocks == ''|| event.Date == '') {
     alert("Please choose a date and timeslots");
     return false
@@ -348,235 +578,3 @@ function valid2(event,exist_event){
  } 
 }
 
-
-
-/**
-*	@Function	checkEventFields
-*	This function checks to see if the information that has been by the user is actually valid
-*	information. It will check the information,name and date of the event.
-*	
-*	@pre		An active event 
-*	@post		returns false if invalid information, returns true with valid information
-*	@since	September 17, 2017
-*
-*/
-
-var checkEventFields = function(event) {
-   if(event.Blocks == '' || event.Name == '' || event.Date == '') {
-      alert("Please finish all information");
-      return false
-   }
-   return true  
-}
-/**
-*	@Function	clearCreateEventElements
-*	This function clears all the active event boxes that have been checked
-*	
-*	@pre 		none. 
-*	@post		none
-*	@since	September 17, 2017
-*
-*/
-
-var clearCreateEventElements = function() {
-   //clear checkboxs
-   var timeBlockContainers = []
-   var timeBlocks = []
-   for(var i=0;i<4;i++){
-      timeBlockContainers[i] = document.getElementById('create-event__time-block-container-'+i)
-      timeBlocks[i] = timeBlockContainers[i].childNodes
-      for(var j=1;j<13;j++){
-         timeBlocks[i][j-1].childNodes[1].checked = false
-      } 
-   }
-   //clear the rest
-   document.getElementById('create-event__name').value = ''
-   document.getElementById('datepicker-create').value = ''
-}
-/**
-*	@Function	buildEventElements
-*	This function takes all the times slots that are going to be used for the event, it takes those
-*	elements and creates time slot boxes based on how long the event is.
-*	
-*	@pre		none
-*	@post		none
-*	@since	September 17, 2017
-*
-*/
-
-function buildEventElements(){
-   for(var i=0;i<existingEvents.length;i++){
-      if(i>0)
-      {
-        if(existingEvents[i].name!=existingEvents[i-1].name)
-        {
-          var event = document.createElement('div')
-          event.setAttribute('class','existing-event')
-          event.style.backgroundColor = existingEvents[i].color
-          event.onclick = function(){expandEvent(this)}
-          document.getElementById('existing-events-container').appendChild(event)
-
-          var eventName = document.createElement('span')
-          eventName.textContent = existingEvents[i].name
-          eventName.setAttribute('class','existing-event__name')
-          event.appendChild(eventName)
-        }
-        
-        var eventDate = document.createElement('span')
-        eventDate.textContent = existingEvents[i].date
-        eventDate.setAttribute('class','existing-event__date')
-        event.appendChild(eventDate)
-  
-        var eventTimes = document.createElement('div')
-        eventTimes.textContent = getTimes(existingEvents[i].blocks)
-        eventTimes.setAttribute('class','existing-event__times')
-        event.appendChild(eventTimes)
-  
-        var eventPeopleLabel = document.createElement('div')
-        eventPeopleLabel.setAttribute('class','existing-event__people-label')
-        eventPeopleLabel.textContent = 'People Attending:'
-        event.appendChild(eventPeopleLabel)
-  
-        //add people
-        eventsPeople = getPeopleArray(existingEvents[i].people)
-        for(var j=0;j<eventsPeople.length;j++){
-           var person = document.createElement('div')
-           person.setAttribute('class','existing-event__person')
-           person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
-           event.appendChild(person)
-        }
-      }
-      else
-      {
-        var event = document.createElement('div')
-        event.setAttribute('class','existing-event')
-        event.style.backgroundColor = existingEvents[i].color
-        event.onclick = function(){expandEvent(this)}
-        document.getElementById('existing-events-container').appendChild(event)
-  
-        var eventName = document.createElement('span')
-        eventName.textContent = existingEvents[i].name
-        eventName.setAttribute('class','existing-event__name')
-        event.appendChild(eventName)
-  
-        var eventDate = document.createElement('span')
-        eventDate.textContent = existingEvents[i].date
-        eventDate.setAttribute('class','existing-event__date')
-        event.appendChild(eventDate)
-  
-        var eventTimes = document.createElement('div')
-        eventTimes.textContent = getTimes(existingEvents[i].blocks)
-        eventTimes.setAttribute('class','existing-event__times')
-        event.appendChild(eventTimes)
-  
-        var eventPeopleLabel = document.createElement('div')
-        eventPeopleLabel.setAttribute('class','existing-event__people-label')
-        eventPeopleLabel.textContent = 'People Attending:'
-        event.appendChild(eventPeopleLabel)
-  
-        //add people
-        eventsPeople = getPeopleArray(existingEvents[i].people)
-        for(var j=0;j<eventsPeople.length;j++){
-           var person = document.createElement('div')
-           person.setAttribute('class','existing-event__person')
-           person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
-           event.appendChild(person)
-        }
-      }
-      // var event = document.createElement('div')
-      // event.setAttribute('class','existing-event')
-      // event.style.backgroundColor = existingEvents[i].color
-      // event.onclick = function(){expandEvent(this)}
-      // document.getElementById('existing-events-container').appendChild(event)
-
-      // var eventName = document.createElement('span')
-      // eventName.textContent = existingEvents[i].name
-      // eventName.setAttribute('class','existing-event__name')
-      // event.appendChild(eventName)
-
-      // var eventDate = document.createElement('span')
-      // eventDate.textContent = existingEvents[i].date
-      // eventDate.setAttribute('class','existing-event__date')
-      // event.appendChild(eventDate)
-
-      // var eventTimes = document.createElement('div')
-      // eventTimes.textContent = getTimes(existingEvents[i].blocks)
-      // eventTimes.setAttribute('class','existing-event__times')
-      // event.appendChild(eventTimes)
-
-      // var eventPeopleLabel = document.createElement('div')
-      // eventPeopleLabel.setAttribute('class','existing-event__people-label')
-      // eventPeopleLabel.textContent = 'People Attending:'
-      // event.appendChild(eventPeopleLabel)
-
-      // //add people
-      // eventsPeople = getPeopleArray(existingEvents[i].people)
-      // for(var j=0;j<eventsPeople.length;j++){
-      //    var person = document.createElement('div')
-      //    person.setAttribute('class','existing-event__person')
-      //    person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
-      //    event.appendChild(person)
-      // }
-   }
-}
-/**
-*	@Function	expandEvent
-*	This function takes the event and displays all the information from the event to the
-*	html document. It will display all the active events from the active day.
-*	
-*	@pre 		event - is an active event from the 
-*	@post		none
-*	@since	September 17, 2017
-*
-*/
-
-var expandEvent = function(event){
-   if(event.style.maxHeight == event.scrollHeight+'px'){
-      event.style.maxHeight = '80px'
-   }
-   else{
-      event.style.maxHeight = event.scrollHeight+'px'
-   }
-}
-/**
-*	@Function	convertToStandardTime
-*	This function takes all the existing military time and converts that time into
-*	standard time
-*	
-*	@pre 		none  
-*	@post		the time slots in standard time.
-*	@since	September 17, 2017
-*
-*/
-
-var convertToStandardTime = function(){
-   militaryTime = false
-   $('#events').empty()
-   document.getElementById('time-format__standard').style.color = 'black'
-   document.getElementById('time-format__military').style.color = '#878787'
-   $('.create-event__time-block-container').empty()
-   $('#existing-events-container').empty()
-   buildCreateElements()
-   buildEventElements()
-}
-/**
-*	@Function	convertToMilitaryTime
-*	This function takes all the existing standard time and converts that time into
-*	military time
-*	
-*	@pre 		none  
-*	@post		the time slots in military time.
-*	@since	September 17, 2017
-*
-*/
-
-var convertToMilitaryTime = function(){
-   militaryTime = true
-   $('#events').empty()
-   document.getElementById('time-format__standard').style.color = '#878787'
-   document.getElementById('time-format__military').style.color = 'black'
-   $('.create-event__time-block-container').empty()
-   $('#existing-events-container').empty()
-   buildCreateElements()
-   buildEventElements()
-}
