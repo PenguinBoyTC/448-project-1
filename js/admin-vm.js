@@ -94,6 +94,21 @@ document.getElementById('create-event-submit').onclick = function(){createEvent(
 *
 */
 
+var add_task = function() {
+	var task_in = prompt("Please enter a task you would like to add to the event", "Task")
+	if (task_in != null)
+	{
+		if (task_in != "Task")
+		{
+			document.getElementById("tasks").innerHTML += task_in + ", ";
+		}
+	}
+}
+
+var clear_tasks = function() {
+	document.getElementById("tasks").innerHTML = "";
+}
+
 var createEvent = function(){
    event = {}
    date = document.getElementById('datepicker-create').value
