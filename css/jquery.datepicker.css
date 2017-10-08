@@ -84,7 +84,7 @@
 
 /* highlight the existing events dates */
 .ui-datepicker td span, .ui-datepicker td a {
-    color: #636D83;
+    /* color: #0B1F4B; */
     display: block;
     padding: .2em;
     text-align: center;
