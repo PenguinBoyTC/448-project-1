@@ -1,4 +1,3 @@
-// window.addEventListener("load", showeventname, false);
 var existingEvents = []
 
 var getEvents = function(){$.ajax({
@@ -176,179 +175,6 @@ var createEvent = function(){
    }   
 }
 
-//chong
-function submitpopwindow(){
-  var mywindow = document.getElementById("myWindow");
-  var inline = document.getElementsByClassName('close')[0];
-  var yes = document.getElementById("Yes_Button");
-  var no = document.getElementById("No_Button");
-  mywindow.style.display = "block";
-
-  inline.onclick = function(){mywindow.style.display="none";}
-  no.onclick = function(){mywindow.style.display="none";navigateToadmin();}
-  yes.onclick = function(){navigateToaddnewdate();}
-
-}
-
-// window.addEventListener("load", showeventname, false);
-
-// var showeventname = function(){
-//   var exist_event = existingEvents[existingEvents.length-1];
-//   document.getElementById('adddate__name').value = exist_event.name;
-// }
-function copyTime(){
-  var exist_event = existingEvents[existingEvents.length-1];
-  var str_slots = exist_event.blocks;
-  str_slots='['+str_slots+']';
-  var timeslots = new Array();
-  timeslots =JSON.parse(str_slots);
-  var timeBlockContainers = []
-  var timeBlocks = []
-  var timeBlockCheckboxs = []
-  for(var i=0;i<4;i++){
-     timeBlockContainers[i] = document.getElementById('create-event__time-block-container-'+i)
-     timeBlocks[i] = timeBlockContainers[i].childNodes
-     for(var j=1;j<13;j++){
-        var block = j-1
-        if(i==1){
-           block = j+11;
-        }
-        else if(i==2){
-           block = j+23;
-        }
-        else if(i==3){
-           block = j+35;
-        }
-        timeBlockCheckboxs[block] = timeBlocks[i][j-1].childNodes[1]
-     } 
-  }
-  for(var i=0;i<timeslots.length;i++)
-  {
-    timeBlockCheckboxs[timeslots[i]].checked = true;
-    console.log(timeBlockCheckboxs[timeslots[i]]);
-  }
-}
-
-
-
-function addnewdate(){
-  console.log(existingEvents);
-  console.log(existingEvents.length-1);
-  var exist_event = existingEvents[existingEvents.length-1];
-  document.getElementById('adddate__name').value = exist_event.name;
-  event = {}
-  date = document.getElementById('datepicker-create').value
-  formattedDate =  date.replace('/','_')
-  formattedDate =  formattedDate.replace('/','_')
-  event.Date = formattedDate
-  event.Name = exist_event.name
-  console.log(event.Name);
-  //Get time blocks that are checked
-  var timeBlockContainers = []
-  var timeBlocks = []
-  var timeBlockCheckboxs = []
-  for(var i=0;i<4;i++){
-     timeBlockContainers[i] = document.getElementById('create-event__time-block-container-'+i)
-     timeBlocks[i] = timeBlockContainers[i].childNodes
-     for(var j=1;j<13;j++){
-        var block = j-1
-        if(i==1){
-           block = j+11;
-        }
-        else if(i==2){
-           block = j+23;
-        }
-        else if(i==3){
-           block = j+35;
-        }
-        timeBlockCheckboxs[block] = timeBlocks[i][j-1].childNodes[1]
-     } 
-  }
-  var checkedBoxes = ''
-  for(var i=0;i<timeBlockCheckboxs.length;i++){
-     if(timeBlockCheckboxs[i].checked == true){
-        if(checkedBoxes == ''){
-           checkedBoxes = timeBlockCheckboxs[i].value
-        }
-        else{
-           checkedBoxes = checkedBoxes + ',' + timeBlockCheckboxs[i].value   
-        }
-     }
-  }
-  event.Blocks = checkedBoxes
-  event.People = 'John Gibbons,'+checkedBoxes+'__'
-  var color = Math.floor(Math.random() * 6) + 1  
-  if(color == 1){
-     event.Color = '#2e277b'
-  }
-  else if(color == 2){
-     event.Color = '#273477'
-  }
-  else if(color == 3){
-     event.Color = '#264673'
-  }
-  else if(color == 4){
-     event.Color = '#265770'
-  }
-  else if(color == 5){
-     event.Color = '#26666c'
-  }
-  else{
-     event.Color = '#25685d'
-  }
-  console.log(111111111);
-  var valid =  valid2(event,exist_event)
-  console.log(valid);
-  console.log(event.Date);
-  console.log(exist_event.date);
-  if(valid){
-     $.ajax({
-        url: 'http://localhost:8080/create',
-        method: 'POST',
-        data: JSON.stringify(event),
-        contentType: 'application/json',
-        dataType: "json",
-        success: function(data){
-           console.log("success")
-           $('#existing-events-container').empty()
-           getEvents()
-        },
-     })
-     submitpopwindow();
-  }
-  
-}
-
-function navigateToaddnewdate(){
-  window.location = 'http://localhost:8080/addnewdate'
-}
-function navigateToadmin(){
-  window.location = 'http://localhost:8080/admin'
-}
-
-function valid2(event,exist_event){
-  if(event.Blocks == ''|| event.Date == '') {
-    alert("Please choose a date and timeslots");
-    return false
- }
- else
- {
-    for(var i=0;i<existingEvents.length;i++)
-    {
-      if(event.Name==existingEvents[i].name)
-      {
-        if(event.Date==existingEvents[i].date)
-        {
-          alert("Please choose an another date");
-          return false;
-        }
-      }
-    }
-    return true  
- } 
-}
-
-
 
 /**
 *	@Function	checkEventFields
@@ -366,7 +192,21 @@ var checkEventFields = function(event) {
       alert("Please finish all information");
       return false
    }
-   return true  
+   else
+   {
+    for(var i=0;i<existingEvents.length;i++)
+    {
+      if(event.Name==existingEvents[i].name)
+      {
+        if(event.Date==existingEvents[i].date)
+        {
+          alert("There is a same event on the same date. Please change an another date.");
+          return false;
+        }
+      }
+    }
+    return true 
+   }
 }
 /**
 *	@Function	clearCreateEventElements
@@ -404,7 +244,7 @@ var clearCreateEventElements = function() {
 *
 */
 
-var buildEventElements = function(){
+function buildEventElements(){
    for(var i=0;i<existingEvents.length;i++){
       if(i>0)
       {
@@ -416,19 +256,13 @@ var buildEventElements = function(){
           event.onclick = function(){expandEvent(this)}
           document.getElementById('existing-events-container').appendChild(event)
 
-          var eventName = document.createElement('span')
+          var eventName = document.createElement('h1')
           eventName.textContent = existingEvents[i].name
           eventName.setAttribute('class','existing-event__name')
           event.appendChild(eventName)
         }
-        
-        var eventDate = document.createElement('span')
-        eventDate.textContent = existingEvents[i].date
-        eventDate.setAttribute('class','existing-event__date')
-        event.appendChild(eventDate)
-  
         var eventTimes = document.createElement('div')
-        eventTimes.textContent = getTimes(existingEvents[i].blocks)
+        eventTimes.textContent = "Time: "+getTimes(existingEvents[i].blocks)
         eventTimes.setAttribute('class','existing-event__times')
         event.appendChild(eventTimes)
   
@@ -436,6 +270,11 @@ var buildEventElements = function(){
         eventPeopleLabel.setAttribute('class','existing-event__people-label')
         eventPeopleLabel.textContent = 'People Attending:'
         event.appendChild(eventPeopleLabel)
+
+        var eventDate = document.createElement('span')
+        eventDate.textContent = existingEvents[i].date
+        eventDate.setAttribute('class','existing-event__date')
+        event.appendChild(eventDate)
   
         //add people
         eventsPeople = getPeopleArray(existingEvents[i].people)
@@ -454,7 +293,7 @@ var buildEventElements = function(){
         event.onclick = function(){expandEvent(this)}
         document.getElementById('existing-events-container').appendChild(event)
   
-        var eventName = document.createElement('span')
+        var eventName = document.createElement('h1')
         eventName.textContent = existingEvents[i].name
         eventName.setAttribute('class','existing-event__name')
         event.appendChild(eventName)
@@ -465,7 +304,7 @@ var buildEventElements = function(){
         event.appendChild(eventDate)
   
         var eventTimes = document.createElement('div')
-        eventTimes.textContent = getTimes(existingEvents[i].blocks)
+        eventTimes.textContent = "Time: "+getTimes(existingEvents[i].blocks)
         eventTimes.setAttribute('class','existing-event__times')
         event.appendChild(eventTimes)
   
@@ -483,41 +322,7 @@ var buildEventElements = function(){
            event.appendChild(person)
         }
       }
-      // var event = document.createElement('div')
-      // event.setAttribute('class','existing-event')
-      // event.style.backgroundColor = existingEvents[i].color
-      // event.onclick = function(){expandEvent(this)}
-      // document.getElementById('existing-events-container').appendChild(event)
-
-      // var eventName = document.createElement('span')
-      // eventName.textContent = existingEvents[i].name
-      // eventName.setAttribute('class','existing-event__name')
-      // event.appendChild(eventName)
-
-      // var eventDate = document.createElement('span')
-      // eventDate.textContent = existingEvents[i].date
-      // eventDate.setAttribute('class','existing-event__date')
-      // event.appendChild(eventDate)
-
-      // var eventTimes = document.createElement('div')
-      // eventTimes.textContent = getTimes(existingEvents[i].blocks)
-      // eventTimes.setAttribute('class','existing-event__times')
-      // event.appendChild(eventTimes)
-
-      // var eventPeopleLabel = document.createElement('div')
-      // eventPeopleLabel.setAttribute('class','existing-event__people-label')
-      // eventPeopleLabel.textContent = 'People Attending:'
-      // event.appendChild(eventPeopleLabel)
-
-      // //add people
-      // eventsPeople = getPeopleArray(existingEvents[i].people)
-      // for(var j=0;j<eventsPeople.length;j++){
-      //    var person = document.createElement('div')
-      //    person.setAttribute('class','existing-event__person')
-      //    person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
-      //    event.appendChild(person)
-      // }
-   }
+   }   
 }
 /**
 *	@Function	expandEvent
@@ -580,3 +385,169 @@ var convertToMilitaryTime = function(){
    buildCreateElements()
    buildEventElements()
 }
+
+
+
+
+//chong
+function submitpopwindow(){
+  var mywindow = document.getElementById("myWindow");
+  var inline = document.getElementsByClassName('close')[0];
+  var yes = document.getElementById("Yes_Button");
+  var no = document.getElementById("No_Button");
+  mywindow.style.display = "block";
+
+  inline.onclick = function(){mywindow.style.display="none";}
+  no.onclick = function(){mywindow.style.display="none";navigateToadmin();}
+  yes.onclick = function(){navigateToaddnewdate();}
+
+}
+
+
+function copyTime(){
+  var exist_event = existingEvents[existingEvents.length-1];
+  document.getElementById('adddate_name').value = exist_event.name;
+  var str_slots = exist_event.blocks;
+  str_slots='['+str_slots+']';
+  var timeslots = new Array();
+  timeslots =JSON.parse(str_slots);
+  var timeBlockContainers = []
+  var timeBlocks = []
+  var timeBlockCheckboxs = []
+  for(var i=0;i<4;i++){
+     timeBlockContainers[i] = document.getElementById('create-event__time-block-container-'+i)
+     timeBlocks[i] = timeBlockContainers[i].childNodes
+     for(var j=1;j<13;j++){
+        var block = j-1
+        if(i==1){
+           block = j+11;
+        }
+        else if(i==2){
+           block = j+23;
+        }
+        else if(i==3){
+           block = j+35;
+        }
+        timeBlockCheckboxs[block] = timeBlocks[i][j-1].childNodes[1]
+     } 
+  }
+  for(var i=0;i<timeslots.length;i++)
+  {
+    timeBlockCheckboxs[timeslots[i]].checked = true;
+  }
+}
+
+
+
+function addnewdate(){
+  console.log(existingEvents);
+  console.log(existingEvents.length-1);
+  var exist_event = existingEvents[existingEvents.length-1];
+  event = {}
+  date = document.getElementById('datepicker-create').value
+  formattedDate =  date.replace('/','_')
+  formattedDate =  formattedDate.replace('/','_')
+  event.Date = formattedDate
+  event.Name = exist_event.name
+  console.log(event.Name);
+  //Get time blocks that are checked
+  var timeBlockContainers = []
+  var timeBlocks = []
+  var timeBlockCheckboxs = []
+  for(var i=0;i<4;i++){
+     timeBlockContainers[i] = document.getElementById('create-event__time-block-container-'+i)
+     timeBlocks[i] = timeBlockContainers[i].childNodes
+     for(var j=1;j<13;j++){
+        var block = j-1
+        if(i==1){
+           block = j+11;
+        }
+        else if(i==2){
+           block = j+23;
+        }
+        else if(i==3){
+           block = j+35;
+        }
+        timeBlockCheckboxs[block] = timeBlocks[i][j-1].childNodes[1]
+     } 
+  }
+  var checkedBoxes = ''
+  for(var i=0;i<timeBlockCheckboxs.length;i++){
+     if(timeBlockCheckboxs[i].checked == true){
+        if(checkedBoxes == ''){
+           checkedBoxes = timeBlockCheckboxs[i].value
+        }
+        else{
+           checkedBoxes = checkedBoxes + ',' + timeBlockCheckboxs[i].value   
+        }
+     }
+  }
+  event.Blocks = checkedBoxes
+  event.People = 'John Gibbons,'+checkedBoxes+'__'
+  var color = Math.floor(Math.random() * 6) + 1  
+  if(color == 1){
+     event.Color = '#2e277b'
+  }
+  else if(color == 2){
+     event.Color = '#273477'
+  }
+  else if(color == 3){
+     event.Color = '#264673'
+  }
+  else if(color == 4){
+     event.Color = '#265770'
+  }
+  else if(color == 5){
+     event.Color = '#26666c'
+  }
+  else{
+     event.Color = '#25685d'
+  }
+  var valid =  valid2(event)
+  if(valid){
+     $.ajax({
+        url: 'http://localhost:8080/create',
+        method: 'POST',
+        data: JSON.stringify(event),
+        contentType: 'application/json',
+        dataType: "json",
+        success: function(data){
+           console.log("success")
+           $('#existing-events-container').empty()
+           getEvents()
+        },
+     })
+     submitpopwindow();
+  }
+  
+}
+
+function navigateToaddnewdate(){ 
+  window.location = 'http://localhost:8080/addnewdate'
+}
+function navigateToadmin(){
+  window.location = 'http://localhost:8080/admin'
+}
+
+function valid2(event){
+  if(event.Blocks == ''|| event.Date == '') {
+    alert("Please choose a date and timeslots");
+    return false
+ }
+ else
+ {
+    for(var i=0;i<existingEvents.length;i++)
+    {
+      if(event.Name==existingEvents[i].name)
+      {
+        if(event.Date==existingEvents[i].date)
+        {
+          alert("Please choose an another date");
+          return false;
+        }
+      }
+    }
+    return true  
+ } 
+}
+
