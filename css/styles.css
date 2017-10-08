@@ -210,19 +210,23 @@
  }
  
  .existing-event__name {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 27px;
     float:left;
     line-height:24px;
     margin: 10px 0;
  }
  
  .existing-event__date {
+    font-size: 18px;
     float:right;
     line-height:24px;
-    font-weight: 300;
+    font-weight: 260;
     margin-top:10px;
  }
  
  .existing-event__times {
+    font-size: 12px;
     float:left;
     margin-bottom:20px;
     line-height: 24px;
@@ -231,13 +235,14 @@
  }
  
  .existing-event__people-label {
+    font-size: 20px;
     float:left;
     clear:both;
-    font-size:20px;
-    margin-bottom:3px;
+    margin-bottom:2px;
  }
  
  .existing-event__person {
+    font-size: 14px;
     float:left;
     clear:both;
     font-weight: 300;
@@ -245,11 +250,12 @@
  }
 
 .existing-event__times {
+    font-size: 15px;
    float:left;
    margin-top:10px;
    line-height: 24px;
    clear:both;
-   font-size:20px;
+
    font-weight: 300;
 }
 
@@ -261,9 +267,9 @@
  }
 
  .existing-event__showmoretag{
+    font-size: 10px;
     float:right;
     clear:both;
-    font-size:15px;
     margin-top:2px;
  }
 
