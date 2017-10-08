@@ -359,14 +359,26 @@
  /* jump to exist event list*/
  #jumptoevent
  {
-     color:#BB5525;
+    color:#BB5525;
     font-size: 24px;
-    position: absolute;
-    top: 440px;
-    left:312px;
+
+
     text-align: center;
     border-radius: 30%;
     border: 5px solid #CAA79E;
+ }
+ #jumpborder
+ {
+    /* color:#BB5525;
+    font-size: 24px; */
+    /* left:312px;  */
+    /* border-radius: 30%;
+    border: 5px solid #CAA79E; */
+    position: absolute;
+    top:440px;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding: 36px;
  }
 
 
