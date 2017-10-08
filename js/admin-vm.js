@@ -392,7 +392,7 @@ function expandEvent(event){
 *
 */
 
-var convertToStandardTime = function(){
+function convertToStandardTime (){
    militaryTime = false
    $('#events').empty()
    document.getElementById('time-format__standard').style.color = 'black'
@@ -413,7 +413,7 @@ var convertToStandardTime = function(){
 *
 */
 
-var convertToMilitaryTime = function(){
+function convertToMilitaryTime(){
    militaryTime = true
    $('#events').empty()
    document.getElementById('time-format__standard').style.color = '#878787'
