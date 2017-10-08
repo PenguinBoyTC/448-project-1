@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Project 1</title>
+    <title>Project 2</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
    <script type="text/javascript" src="js/models/event.js"></script>
@@ -19,9 +19,24 @@
         <span class='create-event__time-block-container' id='create-event__time-block-container-1'></span>
         <span class='create-event__time-block-container' id='create-event__time-block-container-2'></span>
         <span class='create-event__time-block-container' id='create-event__time-block-container-3'></span>
-        <div id='create-event-submit' class='user-submit-btn'>Submit</div>
+        <div id='create-event-submit' class='user-submit-btn' onclick="createEvent();">Submit</div>
+        <!-- <input type="button" id='create-event-submit' class='user-submit-btn' value="Submit" onclick="createEvent();"> -->
       </div>
       <div id='create-event-note'>*Times shown are ranges from the shown time to 30-minutes after.</div>
+      <div id = 'myWindow' class ="Window">
+        <div class = 'Window-inner'>
+          <span class='close'>x</span>
+          <h1>You created a new event successfully!</h1>
+          <p>Do you want to add another date to your event?</p>
+          <input id='Yes_Button' class = 'mybutton' type="button" value='Yes!'>
+          <input id='No_Button' class = 'mybutton' type="button" value='No!'>
+        </div>
+
+      </div>
+
+
+
+
 
       <div id='existing-events__label'>Existing Events</div>
       <div id='existing-events-container'>
