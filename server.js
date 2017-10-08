@@ -72,6 +72,13 @@ app.get('/admin', function (req, res,next) {
    });
 })
 
+app.get('/addnewdate', function (req, res,next) {
+      res.sendFile(path.join(__dirname + "/addnewdate.html"));
+      app.use(function(req, res, next) {
+         next();
+      });
+   })
+
 app.get('/date/:date', function (req, res,next) {
 
    res.sendFile(path.join(__dirname + "/date.html"));
