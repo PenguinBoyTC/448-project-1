@@ -15,8 +15,10 @@
 }
 
 .ui-datepicker .ui-datepicker-header {
+    background-color: #4D76AC;
     padding: .2em 0;
     position: relative;
+    border-radius: 35%;
 }
 
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
@@ -58,6 +60,8 @@
 .ui-datepicker select.ui-datepicker-year { width: 49%; }
 
 .ui-datepicker table {
+    background-color: transparent(0,0,0,6);
+    border-radius:  15%;
     border-collapse: collapse;
     font-size: .9em;
     margin: 0 0 .4em;
@@ -76,6 +80,7 @@
     padding: 1px;
 }
 
+/* highlight the existing events dates */
 .ui-datepicker td span, .ui-datepicker td a {
     display: block;
     padding: .2em;
