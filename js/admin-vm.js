@@ -404,7 +404,7 @@ var clearCreateEventElements = function() {
 *
 */
 
-var buildEventElements = function(){
+function buildEventElements(){
    for(var i=0;i<existingEvents.length;i++){
       if(i>0)
       {

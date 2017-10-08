@@ -5,23 +5,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
    <script type="text/javascript" src="js/models/event.js"></script>
-
    <script type="text/javascript" src="http://localhost:8080/js/admin-vm.js"></script>
    <script type="text/javascript" src="http://localhost:8080/js/converter.js"></script>
-   
+
    <link rel="stylesheet" href="/css/styles.css"/>
    <link rel="stylesheet" type="text/css" href="css/jquery.datepicker.css"> 
   </head>
   <body>
-   
-    <!-- Color is different if there is an exist event on that date-->
-    <div id="datepicker"></div>
-	  <div id="datepicker-note">Select a date to view events</div>
 
-
-    <div id='existing-events__label' >Existing Events</div>
-    <div id='existing-events-container' >
+      <!-- Color is different if there is an exist event on that date-->
+      <div id="datepicker"></div>
+      <div id="datepicker-note">Select a date to view events</div>
       
+      <div id='existing-events__label' >Existing Events</div>
+      <div id='existing-events-container' ></div>
+
     <div id='admin-label'>Admin Mode</div>
     <div type="button" data-name="show" id='admin-mode-btn' onclick='navigateToAdminMode()'>
       <img src='/assets/admin.png' id='admin-img'>
