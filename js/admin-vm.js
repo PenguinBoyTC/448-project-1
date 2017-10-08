@@ -260,7 +260,24 @@ function buildEventElements(){
           eventName.textContent = existingEvents[i].name
           eventName.setAttribute('class','existing-event__name')
           event.appendChild(eventName)
+
+          var showmoretag = document.createElement('h2')
+          showmoretag.textContent = "Click to Expand"
+          showmoretag.setAttribute('class','existing-event__showmoretag')
+          event.appendChild(showmoretag)
         }
+
+        var border = document.createElement('p')
+        border.textContent = "_____________________________________"
+        border.setAttribute('class','existing-event__border')
+        event.appendChild(border)
+
+
+        var eventDate = document.createElement('span')
+        eventDate.textContent = existingEvents[i].date
+        eventDate.setAttribute('class','existing-event__date')
+        event.appendChild(eventDate)
+
         var eventTimes = document.createElement('div')
         eventTimes.textContent = "Time: "+getTimes(existingEvents[i].blocks)
         eventTimes.setAttribute('class','existing-event__times')
@@ -271,10 +288,10 @@ function buildEventElements(){
         eventPeopleLabel.textContent = 'People Attending:'
         event.appendChild(eventPeopleLabel)
 
-        var eventDate = document.createElement('span')
-        eventDate.textContent = existingEvents[i].date
-        eventDate.setAttribute('class','existing-event__date')
-        event.appendChild(eventDate)
+        // var eventDate = document.createElement('span')
+        // eventDate.textContent = existingEvents[i].date
+        // eventDate.setAttribute('class','existing-event__date')
+        // event.appendChild(eventDate)
   
         //add people
         eventsPeople = getPeopleArray(existingEvents[i].people)
@@ -297,6 +314,16 @@ function buildEventElements(){
         eventName.textContent = existingEvents[i].name
         eventName.setAttribute('class','existing-event__name')
         event.appendChild(eventName)
+
+        var showmoretag = document.createElement('h2')
+        showmoretag.textContent = "Click to Expand"
+        showmoretag.setAttribute('class','existing-event__showmoretag')
+        event.appendChild(showmoretag)
+
+        var border = document.createElement('p')
+        border.textContent = "_____________________________________"
+        border.setAttribute('class','existing-event__border')
+        event.appendChild(border)
   
         var eventDate = document.createElement('span')
         eventDate.textContent = existingEvents[i].date

@@ -249,9 +249,23 @@
    margin-top:10px;
    line-height: 24px;
    clear:both;
+   font-size:20px;
    font-weight: 300;
 }
 
+.existing-event__border {
+    float:left;
+    clear:both;
+    font-size:20px;
+    margin-top:3px;
+ }
+
+ .existing-event__showmoretag{
+    float:right;
+    clear:both;
+    font-size:15px;
+    margin-top:2px;
+ }
 
 
 /* Chong */
