@@ -207,8 +207,9 @@ function drawEvents(){
 			eventTasksSelect.appendChild(option);
 		  }
 		  $(".eventTasksSelect").click(function(e) {
-         e.stopPropagation();
-      });
+			e.stopPropagation();
+			});
+			document.getElementById('eventTasksSelect').selectedIndex = -1;
 	  }
 	  
 
@@ -305,9 +306,12 @@ var addUserToEvent = function(element) {
 	var eventsTasks = getTasks(event.tasks);
 
 	console.log(event.tasks);
+	var tasks_ = getTasks(event.tasks);
 	console.log(trial.selectedIndex);
-	console.log(event.tasks[trial.selectedIndex]);
-	event.tasks[trial.selectedIndex] = "@" + trial_1;
+	console.log(tasks_[trial.selectedIndex]);
+	var old = tasks_[trial.selectedIndex];
+	tasks_[trial.selectedIndex] = "@" + old;
+	event.tasks = tasks_;
    
    updateEvent(event)
 }
