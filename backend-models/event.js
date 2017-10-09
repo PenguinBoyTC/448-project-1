@@ -5,6 +5,7 @@ function Event(data) {
   this.blocks = data.Blocks;
   this.people = data.People;
   this.id = data.Id;
+  this.tasks = data.Tasks;
 }
 
 // class methods

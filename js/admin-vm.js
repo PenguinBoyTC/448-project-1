@@ -79,9 +79,11 @@ var buildCreateElements = function(){
          timeBlocks[j].label.appendChild(timeBlocks[j].input)
          timeBlockContainers[i].appendChild(timeBlocks[j].label)
       }
-   }
+   }   
 }
 document.getElementById('create-event-submit').onclick = function(){createEvent();}
+document.getElementById('add-task-button').onclick = function(){add_task()};
+document.getElementById('clear-task-button').onclick = function(){clear_tasks()};
 /**
 *	@Function	createEvent        
 *	This function takes the contents of the event and sends that information to the AirTable
@@ -116,6 +118,8 @@ var createEvent = function(){
    formattedDate =  formattedDate.replace('/','_')
    event.Date = formattedDate
    event.Name = document.getElementById('create-event__name').value
+   event.Tasks = document.getElementById('tasks').innerHTML;
+   alert(event.Tasks);
 
    //Get time blocks that are checked
    var timeBlockContainers = []
@@ -150,7 +154,8 @@ var createEvent = function(){
       }
    }
    event.Blocks = checkedBoxes
-   event.People = 'John Gibbons,'+checkedBoxes+'__'
+   event.People = "John Gibbons," +checkedBoxes+'__';
+  
    var color = Math.floor(Math.random() * 6) + 1  
    if(color == 1){
       event.Color = '#2e277b'

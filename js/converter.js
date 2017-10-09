@@ -187,3 +187,12 @@ var blocksConversion = function(block)
    }
    return temp;
 }
+
+function getTasks(taskString) 
+{
+	
+	let task_array = taskString.split(',');
+	
+	return task_array;
+	
+}

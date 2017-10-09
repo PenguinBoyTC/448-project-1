@@ -181,7 +181,7 @@ app.post("/create", function(req,res,next){
      "Date": req.body.Date,
      "People": req.body.People,
      "Blocks": req.body.Blocks,
-	 "Taks": req.body.Tasks
+	 "Tasks": req.body.Tasks
    }, function(err, record) {
          if (err) { console.error(err); return; }
          res.send(record)
