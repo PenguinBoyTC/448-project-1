@@ -317,6 +317,23 @@ function buildEventElements(){
            person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
            event.appendChild(person)
         }
+		
+		if (existingEvents[i].tasks != null)
+		{
+		  var eventTaskLabel = document.createElement('div');
+		  eventTaskLabel.setAttribute('class','existing-event__people-label');
+		  eventTaskLabel.textContent = 'Task List:';
+		  event.appendChild(eventTaskLabel);
+		  
+		  var eventsTasks = getTasks(existingEvents[i].tasks);
+		  for (var k=0;k<eventsTasks.length;k++)
+		  {
+			  var task = document.createElement('div');
+			  task.setAttribute('class','existing-event__person');
+			  task.textContent = eventsTasks[k];
+			  event.appendChild(task);
+		  }
+		}
       }
       else
       {
@@ -364,6 +381,23 @@ function buildEventElements(){
            person.textContent = eventsPeople[j].name  + ' : ' + eventsPeople[j].availableTimeBlocks 
            event.appendChild(person)
         }
+		
+		if (existingEvents[i].tasks != null)
+		{
+		  var eventTaskLabel = document.createElement('div');
+		  eventTaskLabel.setAttribute('class','existing-event__people-label');
+		  eventTaskLabel.textContent = 'Task List:';
+		  event.appendChild(eventTaskLabel);
+		  
+		  var eventsTasks = getTasks(existingEvents[i].tasks);
+		  for (var k=0;k<eventsTasks.length;k++)
+		  {
+			  var task = document.createElement('div');
+			  task.setAttribute('class','existing-event__person');
+			  task.textContent = eventsTasks[k];
+			  event.appendChild(task);
+		  }
+		}
       }
    }   
 }
