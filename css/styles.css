@@ -418,6 +418,21 @@
     padding: 36px;
  }
 
+.existing-event__task-label {
+   float:left;
+   clear:both;
+   font-size:20px;
+   margin-top: 12px;
+   margin-bottom:3px;
+}
 
+#eventTasksSelect {
+	float:left;
+   clear:both;
+   font-size:20px;
+   margin-top: 12px;
+   margin-bottom:3px;
+   width: 395px;
+}
  
  
