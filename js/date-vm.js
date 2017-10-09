@@ -182,6 +182,38 @@ function drawEvents(){
             e.stopPropagation();
          });
       }
+	  
+	  if (daysEvents[i].tasks != null)
+	  {		  
+		  var eventTasksLabel = document.createElement('div');
+		  eventTasksLabel.setAttribute('class','task-label');
+		  eventTasksLabel.setAttribute('id','task_label');
+		  events[i].appendChild(eventTasksLabel);
+		  eventTasksLabel.textContent = 'Event Tasks';
+  
+		  var eventsTasks = getTasks(daysEvents[i].tasks);
+		  var eventForm = document.createElement('form');
+		  events[i].appendChild(eventForm);
+		  var eventTasksSelect = document.createElement('select');
+		  eventTasksSelect.setAttribute('class','eventTasksSelect');
+		  eventTasksSelect.setAttribute('name','eventTasksSelect');
+		  eventTasksSelect.setAttribute('id','eventTasksSelect');
+		  eventForm.appendChild(eventTasksSelect);
+	      eventTasksSelect.multiple = true;
+		  
+		  for (var k=0;k<eventsTasks.length - 1;k++)
+		  {
+				var option = document.createElement('option');
+				console.log(eventsTasks[k]);
+				option.value = eventsTasks[k];
+				option.text = eventsTasks[k];
+				eventTasksSelect.appendChild(option);
+		  }
+		  $(".eventTasksSelect").click(function(e) {
+         e.stopPropagation();
+      });
+	  }
+	  
 
       var submitBtn = document.createElement('button')
       submitBtn.setAttribute('class','user-submit-btn')
@@ -210,7 +242,7 @@ function drawEvents(){
 var clearEventFields = function(element) {
    var children = element.childNodes
    children[2].value = ''
-   for(var i=3;i<children.length-1;i++){
+   for(var i=3;i<children.length-3;i++){
       var box = children[i].childNodes
       box[1].checked = false
    }
@@ -239,7 +271,7 @@ var addUserToEvent = function(element) {
    var name = children[2].value;
    var noTimeSelected = true
    var peopleBlockString = ''
-   for(var j=3;j<children.length-1;j++){
+   for(var j=3;j<children.length-3;j++){
       var checkbox = children[j].childNodes
       if(checkbox[1].checked){
          peopleBlockString = peopleBlockString+','+checkbox[1].value
