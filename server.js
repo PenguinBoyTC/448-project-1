@@ -20,7 +20,7 @@
 *	
 *	
 *	
-*	@author	Mark VanLandingham, Quinn Meier, Alex Bohlken, Dylan Vondracek
+*	@author	Mark VanLandingham, Quinn Meier, Alex Bohlken, Dylan Vondracek, Chong Tan
 *	@version	1.0
 *	@since	September 17, 2017
 *
@@ -72,6 +72,16 @@ app.get('/admin', function (req, res,next) {
    });
 })
 
+/** 
+*	@Function		/addnewdate
+*	This function is to create a path and then navigate to addnewdate.html
+
+*	@pre	 	eventsArr has all events on it
+*	@post 		returns array of events on specific date
+*	@version	1.0
+*	@since	October 7, 2017
+*
+*/
 app.get('/addnewdate', function (req, res,next) {
       res.sendFile(path.join(__dirname + "/addnewdate.html"));
       app.use(function(req, res, next) {
