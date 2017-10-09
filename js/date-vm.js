@@ -192,22 +192,19 @@ function drawEvents(){
 		  eventTasksLabel.textContent = 'Event Tasks';
   
 		  var eventsTasks = getTasks(daysEvents[i].tasks);
-		  var eventForm = document.createElement('form');
-		  events[i].appendChild(eventForm);
 		  var eventTasksSelect = document.createElement('select');
 		  eventTasksSelect.setAttribute('class','eventTasksSelect');
 		  eventTasksSelect.setAttribute('name','eventTasksSelect');
 		  eventTasksSelect.setAttribute('id','eventTasksSelect');
-		  eventForm.appendChild(eventTasksSelect);
-	      eventTasksSelect.multiple = true;
+		  events[i].appendChild(eventTasksSelect);
+//	      eventTasksSelect.multiple = true;
 		  
 		  for (var k=0;k<eventsTasks.length - 1;k++)
 		  {
-				var option = document.createElement('option');
-				console.log(eventsTasks[k]);
-				option.value = eventsTasks[k];
-				option.text = eventsTasks[k];
-				eventTasksSelect.appendChild(option);
+			var option = document.createElement('option');
+			option.value = eventsTasks[k];
+			option.text = eventsTasks[k];
+			eventTasksSelect.appendChild(option);
 		  }
 		  $(".eventTasksSelect").click(function(e) {
          e.stopPropagation();
@@ -271,7 +268,9 @@ var addUserToEvent = function(element) {
    var name = children[2].value;
    var noTimeSelected = true
    var peopleBlockString = ''
+   var num_blocks = 3;
    for(var j=3;j<children.length-3;j++){
+	   num_blocks++;
       var checkbox = children[j].childNodes
       if(checkbox[1].checked){
          peopleBlockString = peopleBlockString+','+checkbox[1].value
@@ -297,6 +296,18 @@ var addUserToEvent = function(element) {
    else {
       event.people = peopleBlockString
    }
+   console.log(num_blocks);
+   var trial = children[num_blocks +1];
+	var trial_1 = trial.options[trial.selectedIndex].value;
+   console.log(trial_1);
+   
+	var update_tasks = [];
+	var eventsTasks = getTasks(event.tasks);
+
+	console.log(event.tasks);
+	console.log(trial.selectedIndex);
+	console.log(event.tasks[trial.selectedIndex]);
+	event.tasks[trial.selectedIndex] = "@" + trial_1;
    
    updateEvent(event)
 }
