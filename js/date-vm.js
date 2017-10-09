@@ -315,6 +315,7 @@ var addUserToEvent = function(element) {
 	tasks_string = tasks_.toString();
 	console.log(tasks_string);
 	event.tasks = tasks_string;
+	console.log(event.tasks);
    
    updateEvent(event)
 }
