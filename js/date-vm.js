@@ -211,7 +211,6 @@ function drawEvents(){
 			});
 			document.getElementById('eventTasksSelect').selectedIndex = -1;
 	  }
-	  
 
       var submitBtn = document.createElement('button')
       submitBtn.setAttribute('class','user-submit-btn')
@@ -310,8 +309,12 @@ var addUserToEvent = function(element) {
 	console.log(trial.selectedIndex);
 	console.log(tasks_[trial.selectedIndex]);
 	var old = tasks_[trial.selectedIndex];
-	tasks_[trial.selectedIndex] = "@" + old;
-	event.tasks = tasks_;
+	console.log(tasks_);
+	console.log("/" + old);
+	tasks_[trial.selectedIndex] = "/" + old;
+	tasks_string = tasks_.toString();
+	console.log(tasks_string);
+	event.tasks = tasks_string;
    
    updateEvent(event)
 }

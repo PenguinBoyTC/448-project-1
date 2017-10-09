@@ -119,7 +119,6 @@ var createEvent = function(){
    event.Date = formattedDate
    event.Name = document.getElementById('create-event__name').value
    event.Tasks = document.getElementById('tasks').innerHTML;
-   alert(event.Tasks);
 
    //Get time blocks that are checked
    var timeBlockContainers = []
